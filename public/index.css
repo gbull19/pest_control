@@ -1,0 +1,8 @@
+.login {
+    background-color: #f1f1f1;
+    width: 400px;
+    padding: 50px;
+    border-radius: 7px;
+    position: absolute;
+    box-shadow: 0 5px 25px 5px rgb(0 0 0);
+}
