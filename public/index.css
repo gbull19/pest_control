@@ -1,15 +1,27 @@
-/* .main {
+/*.main {
     background-color: #32333e;
     width: 100%;
     display: flex;
-}
+} */
 
 .row {
     background-color: #32333e;
     width: 100%;
-} */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
 
 .login {
+    background-color: #ebe9e7;
+    width: 350px;
+    padding: 50px;
+    border-radius: 7px;
+    position: absolute;
+    box-shadow: 0 5px 25px 5px rgb(0 0 0);
+}
+
+.register {
     background-color: #ebe9e7;
     width: 350px;
     padding: 50px;
@@ -22,10 +34,15 @@
     margin: 0px auto 10px;
     display: block;
     max-width: 250px;
-    max-height: 150px;
 }
 
-.username {
+.register_logo {
+    margin: 0px auto 10px;
+    display: block;
+    max-width: 175px;
+}
+
+.form_input {
     width: 100%;
     margin-bottom: 10px;
     height: 25px;
@@ -36,28 +53,15 @@
     font-size: 16px;
 }
 
-.password {
+.register_form_input {
     width: 100%;
-    margin-bottom: 0px;
+    margin-bottom: 5px;
     height: 25px;
-    padding-left: 15px;
+    padding-left: 10px;
     border: 2px solid #ccc;
     border-radius: 5px;
     font-family: Helvetica Light;
-    font-size: 16px;
-}
-
-.signup_button {
-    color: #36578c;
-    font-family: Helvetica Light;
-    font-size: 15px;
-}
-
-.signup_button:hover {
-    color: #e07400;
-    font-family: Helvetica Light;
-    font-size: 15px;
-    font-weight: bold;
+    font-size: 14px;
 }
 
 .login_button {
@@ -73,6 +77,44 @@
 }
 
 .login_button:hover {
+    width: 20%;
+    margin-bottom: 0px;
+    height: 40px;
+    border: 2px solid #e07400;
+    border-radius: 5px;
+    background: #36578c;
+    color: #ebe9e7;
+    font-family: Helvetica Light;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.signin_button {
+    color: #36578c;
+    font-family: Helvetica Light;
+    font-size: 15px;
+}
+
+.signin_button:hover {
+    color: #e07400;
+    font-family: Helvetica Light;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.signup_button {
+    width: 20%;
+    margin-bottom: 0px;
+    height: 40px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background: #36578c;
+    color: #ebe9e7;
+    font-family: Helvetica Light;
+    font-size: 15px;
+}
+
+.signup_button:hover {
     width: 20%;
     margin-bottom: 0px;
     height: 40px;

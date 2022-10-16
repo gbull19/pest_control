@@ -8,10 +8,12 @@ const {SERVER_PORT} = process.env;
 
 const {
     getUpcomingAppointments,
-    getPastAppointments, 
+    getPastAppointments,
+    register
 } = require('./controller.js')
 
 app.get('/upcoming', getUpcomingAppointments);
 app.get('/appt', getPastAppointments);
+app.post('/api/register', register);
 
 app.listen(SERVER_PORT, () => console.log(`up on ${SERVER_PORT}`));
