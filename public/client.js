@@ -1,11 +1,12 @@
-const registerForm = document.querySelector(".register");
+const registerForm = document.getElementById("signup_button");
 
 const {SERVER_PORT} = process.env;
 const baseURL = `http://localhost:${SERVER_PORT}/`
 
 const register = body => axios.post(`${baseURL}api/register`, body)
   .then(res => {
-    createUserCard(res.data)
+    alert("Account registered successfully!");
+    // createUserCard(res.data)
   }).catch(err => {console.log(err)
     alert('Uh oh. Your request did not work.')
   })

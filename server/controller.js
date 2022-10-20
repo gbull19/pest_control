@@ -1,7 +1,7 @@
 require('dotenv').config();
 const bcrypt = require("bcryptjs");
+const Sequelize = require("sequelize");
 
-const Sequelize = require('sequelize');
 const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
     dialect: 'postgres',
     dialectOptions: {
@@ -27,7 +27,7 @@ module.exports = {
         console.log('Registering User');
         // console.table(userObj);
         sequelize.query(`
-        INSERT INTO users(first_name, last_name, email, street_address, city, state, password)
+        INSERT INTO users (first_name, last_name, email, street_address, city, state, password)
         VALUES (${userObj.first_name}, ${userObj.last_name}, ${userObj.email}, ${userObj.street}, ${userObj.city}, ${userObj.state}, ${hashPassword});
         `)
         .then(dbRes => res.status(200).send(dbRes[0]))
@@ -48,14 +48,14 @@ module.exports = {
     seed: (req, res) => {
         sequelize.query(`
             CREATE TABLE users (
-                id SERIAL PRIMARY KEY,
+                user_id SERIAL PRIMARY KEY,
                 first_name VARCHAR(50) NOT NULL,
                 last_name VARCHAR(50) NOT NULL,
                 email VARCHAR(75) NOT NULL,
                 street_address VARCHAR(300) NOT NULL,
                 city VARCHAR(75) NOT NULL,
                 state VARCHAR(50) NOT NULL,
-                password BINARY(100) NOT NULL
+                password VARCHAR(100) NOT NULL
             );
         `).then(() => {
             console.log('DB seeded!')
