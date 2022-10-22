@@ -15,26 +15,19 @@ module.exports = {
     register: (req, res) => {
         const {first_name, last_name, email, street_address, city, state, password} = req.body
         const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-        let userObj = {
-          first_name: `${first_name}`,
-          last_name: `${last_name}`,
-          email: `${email}`,
-          street_address: `${street_address}`,
-          city: `${city}`,
-          state: `${state}`,
-          password: hashPassword
-        }
-        console.log('Registering User');
-        // console.table(userObj);
+
         sequelize.query(`
         INSERT INTO users (first_name, last_name, email, street_address, city, state, password)
-        VALUES (${userObj.first_name}, ${userObj.last_name}, ${userObj.email}, ${userObj.street}, ${userObj.city}, ${userObj.state}, ${hashPassword});
+        VALUES ('${first_name}', '${last_name}', '${email}', '${street_address}', '${city}', '${state}', '${hashPassword}');
         `)
-        .then(dbRes => res.status(200).send(dbRes[0]))
-        .catch(err => {console.log(err)})
-        // delete userObj.password;
-        // console.table(userObj);
-        // res.status(200).send(userObj);
+        .then(() => {
+            console.log('Registration complete')
+            res.sendStatus(200)
+        }).catch(err => console.log('Error seeding DB', err))
+    },
+
+    login: (req, res) => {
+
     },
 
     getUpcomingAppointments: (req, res) => {
@@ -47,6 +40,8 @@ module.exports = {
 
     seed: (req, res) => {
         sequelize.query(`
+            DROP TABLE IF EXISTS users;
+
             CREATE TABLE users (
                 user_id SERIAL PRIMARY KEY,
                 first_name VARCHAR(50) NOT NULL,
@@ -55,11 +50,15 @@ module.exports = {
                 street_address VARCHAR(300) NOT NULL,
                 city VARCHAR(75) NOT NULL,
                 state VARCHAR(50) NOT NULL,
+                is_tech BIT, 
                 password VARCHAR(100) NOT NULL
             );
+
+            INSERT INTO users (first_name, last_name, email, street_address, city, state, is_tech, password)
+            VALUES ('Garrett', 'Bull', 'garrett@bull.com', '123 W 456 N', 'Orem', 'Utah', '1', '123456');
         `).then(() => {
-            console.log('DB seeded!')
+            console.log('DB seeded')
             res.sendStatus(200)
-        }).catch(err => console.log('error seeding DB', err))
+        }).catch(err => console.log('Error seeding DB', err))
     }
 };
