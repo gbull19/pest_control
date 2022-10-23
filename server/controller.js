@@ -16,7 +16,6 @@ module.exports = {
     register: (req, res) => {
         const {first_name, last_name, email, street_address, city, state, is_tech, password} = req.body;
         const hashPassword = bcrypt.hashSync(password, salt);
-
         sequelize.query(`
         INSERT INTO users (first_name, last_name, email, street_address, city, state, is_tech, password)
         VALUES ('${first_name}', '${last_name}', '${email}', '${street_address}', '${city}', '${state}', '${is_tech}', '${hashPassword}');
@@ -28,17 +27,25 @@ module.exports = {
     },
 
     login: (req, res) => {
+        console.log(req.body); //getting blank object here 
         const {email, password} = req.body;
-        for (let i = 0; i < users.length; i++) {
-          if (users[i].email == email) {
-            const hashPassword = bcrypt.compareSync(password, user[i].password);
-            if (hashPassword) {
-                let userToReturn = {...users[i]}
-                delete userToReturn.password;
-                res.status(200).send(userToReturn);
+        try {
+            const user = URLSearchParams.findOne({email});
+            const hashPassword = bcrypt.compareSync(password, user.password);
+            if (!user) {
+                res.status(401).json({error: "User not found"})
+            } else if (hashPassword) {
+                res.status(200).json({
+                    message: "Login successful",
+                    user,
+                })
             }
-          } 
-        } res.status(400).send("User not found.")
+        } catch (error) {
+            res.status(400).json({
+                message: "An error ocurred",
+                error: error.message,
+            })
+        }
     },
 
     getUpcomingAppointments: (req, res) => {

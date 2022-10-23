@@ -80,7 +80,7 @@ const loginToggleHandler = e => {
   registerDiv.classList.add("active");
 };
 
-const login = (body) => axios.get('http://localhost:8444/api/login', body)
+const login = (body) => axios.post('http://localhost:8444/api/login', body)
 .then(res => {
   alert("Login successful!");
   //redirect to account page
@@ -96,7 +96,7 @@ const loginSubmitHandler = event => {
     email: email.value,
     password: password.value
   };
-  console.table(bodyObj);
+  console.table(bodyObj); //bodyObj successfully created
   login(bodyObj);
 };
 

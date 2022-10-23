@@ -16,7 +16,7 @@ const {
 
 app.get('/upcoming', getUpcomingAppointments);
 app.get('/appt', getPastAppointments);
-app.get('/api/login', login);
+app.post('/api/login', login);
 app.post('/api/register', register);
 app.post('/api/seed', seed);
 
