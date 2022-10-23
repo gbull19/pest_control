@@ -29,6 +29,17 @@ module.exports = {
     login: (req, res) => {
         console.log(req.body); //getting blank object here 
         const {email, password} = req.body;
+    //     for (let i = 0; i < users.length; i++) {
+    //         if (users[i].email === email) {
+    //           const authenticated = bcrypt.compareSync(password, users[i].password)
+    //           if (authenticated) {
+    //             let userToReturn = {...users[i]}
+    //             // delete userToReturn.password
+    //             res.status(200).send(userToReturn)
+    //           }
+    //         }
+    //     }res.status(400).send("User not found.")
+    // },
         try {
             const user = URLSearchParams.findOne({email});
             const hashPassword = bcrypt.compareSync(password, user.password);

@@ -98,6 +98,8 @@ const loginSubmitHandler = event => {
   };
   console.table(bodyObj); //bodyObj successfully created
   login(bodyObj);
+  email.value = '';
+  password.value = '';
 };
 
 registerForm.addEventListener('submit', registerSubmitHandler);
