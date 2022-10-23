@@ -1,19 +1,20 @@
 const registerForm = document.getElementById("register");
-const loginToggle = document.getElementById("login_toggle");
 const registerToggle = document.getElementById("register_toggle");
 const registerDiv = document.getElementById("registerDiv");
+
+const loginForm = document.getElementById("login");
+const loginToggle = document.getElementById("login_toggle");
 const loginDiv = document.getElementById("loginDiv");
 
 const register = body => axios.post('http://localhost:8444/api/register', body)
   .then(res => {
     alert("Account registered successfully!");
+    registerForm.reset();
   }).catch(err => {console.log(err)
     alert('Uh oh. Your request did not work.')
   })
-
 const registerSubmitHandler= event => {
   event.preventDefault();
-
   let first_name = document.querySelector('#first_name');
   let last_name = document.querySelector('#last_name');
   let email = document.querySelector('#email');
@@ -22,12 +23,39 @@ const registerSubmitHandler= event => {
   let state = document.querySelector('#state');
   let password = document.querySelector('#password');
   let confirm_password = document.querySelector('#confirm_password');
-
+  // const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+  // let cancelled = true;
+  // switch (true) {
+  //   case (password.length >= 10 && /[0-9]/.test(password) && specialChars.test(password) && /[a-z]/.test(password)  && /[A-Z]/.test(password)):
+  //     console.log("Password saved successfully!");
+  //     cancelled = false;
+  //     break;
+  //   case (password.value !== confirm_password.value):
+  //     alert("Your passwords need to match.");
+  //     break;
+  //   case (!password.length >= 10):
+  //     alert("Password must contain at least 10 characters.");
+  //     break;
+  //   case (!/[0-9]/.test(password)):
+  //     alert("Password must contain at least one number.");
+  //     break;
+  //   case (!/[a-z]/.test(password) || !/[A-Z]/.test(password)):
+  //     alert("Password must contain at least one lowercase and one uppercase letter.");
+  //     break;
+  //   case (!specialChars.test(password)):
+  //     alert("Password must contain at least one special character.");
+  //     break;
+  //   default:
+  //     alert("Please choose another password.");
+  //     break;
+  // };
+  // if (cancelled) {
+  //   return false;
+  // };
   if (password.value !== confirm_password.value) {
     alert("Your passwords need to match.");
-    return;
-  };
-
+      return false;
+  }
   let bodyObj = {
     first_name: first_name.value,
     last_name: last_name.value,
@@ -35,9 +63,9 @@ const registerSubmitHandler= event => {
     street_address: street_address.value,
     city: city.value,
     state: state.value,
+    is_tech: 0,
     password: password.value
   };
-
   register(bodyObj);
 }
 
@@ -46,13 +74,34 @@ const registerToggleHandler = e => {
   registerDiv.classList.remove("active");
   loginDiv.classList.add("active");
 };
-
 const loginToggleHandler = e => {
   e.preventDefault();
   loginDiv.classList.remove("active");
   registerDiv.classList.add("active");
 };
 
+const login = (body) => axios.get('http://localhost:8444/api/login', body)
+.then(res => {
+  alert("Login successful!");
+  //redirect to account page
+}).catch(err => {console.log(err)
+  alert('Uh oh. Your request did not work.')
+})
+
+const loginSubmitHandler = event => {
+  event.preventDefault();
+  let email = document.querySelector('#loginEmail');
+  let password = document.querySelector('#loginPassword');
+  let bodyObj = {
+    email: email.value,
+    password: password.value
+  };
+  console.table(bodyObj);
+  login(bodyObj);
+};
+
 registerForm.addEventListener('submit', registerSubmitHandler);
 registerToggle.addEventListener('click', registerToggleHandler);
-loginDiv.addEventListener('click', loginToggleHandler)
+
+loginForm.addEventListener('submit', loginSubmitHandler);
+loginToggle.addEventListener('click', loginToggleHandler)

@@ -14,7 +14,7 @@ h1 {
 }
 .container {
     background-color: #32333e;
-    /* width: 100%; */
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -26,7 +26,7 @@ h1 {
 
 .active {
     background-color: #32333e;
-    /* width: 100%; */
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -41,6 +41,12 @@ h1 {
     box-shadow: 0 5px 25px 5px rgb(0 0 0);
 }
 
+.login_logo {
+    margin: 0px auto 10px;
+    display: block;
+    max-width: 175px;
+}
+
 .register {
     background-color: #ebe9e7;
     width: 350px;
@@ -50,27 +56,10 @@ h1 {
     box-shadow: 0 5px 25px 5px rgb(0 0 0);
 }
 
-.login_logo {
-    margin: 0px auto 10px;
-    display: block;
-    max-width: 250px;
-}
-
 .register_logo {
     margin: 0px auto 10px;
     display: block;
     max-width: 175px;
-}
-
-.form_input {
-    width: 100%;
-    margin-bottom: 10px;
-    height: 25px;
-    padding-left: 15px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    font-family: Helvetica Light;
-    font-size: 16px;
 }
 
 .register_form_input {
@@ -109,13 +98,13 @@ h1 {
     font-weight: bold;
 }
 
-.signin_button {
+.form_toggle{
     color: #36578c;
     font-family: Helvetica Light;
     font-size: 15px;
 }
 
-.signin_button:hover {
+.form_toggle:hover {
     color: #e07400;
     font-family: Helvetica Light;
     font-size: 15px;

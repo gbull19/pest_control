@@ -1,5 +1,6 @@
 require('dotenv').config();
 const bcrypt = require("bcryptjs");
+const salt = bcrypt.genSaltSync(10);
 const Sequelize = require("sequelize");
 
 const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
@@ -13,12 +14,12 @@ const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
 
 module.exports = {
     register: (req, res) => {
-        const {first_name, last_name, email, street_address, city, state, password} = req.body
-        const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+        const {first_name, last_name, email, street_address, city, state, is_tech, password} = req.body;
+        const hashPassword = bcrypt.hashSync(password, salt);
 
         sequelize.query(`
-        INSERT INTO users (first_name, last_name, email, street_address, city, state, password)
-        VALUES ('${first_name}', '${last_name}', '${email}', '${street_address}', '${city}', '${state}', '${hashPassword}');
+        INSERT INTO users (first_name, last_name, email, street_address, city, state, is_tech, password)
+        VALUES ('${first_name}', '${last_name}', '${email}', '${street_address}', '${city}', '${state}', '${is_tech}', '${hashPassword}');
         `)
         .then(() => {
             console.log('Registration complete')
@@ -27,7 +28,17 @@ module.exports = {
     },
 
     login: (req, res) => {
-
+        const {email, password} = req.body;
+        for (let i = 0; i < users.length; i++) {
+          if (users[i].email == email) {
+            const hashPassword = bcrypt.compareSync(password, user[i].password);
+            if (hashPassword) {
+                let userToReturn = {...users[i]}
+                delete userToReturn.password;
+                res.status(200).send(userToReturn);
+            }
+          } 
+        } res.status(400).send("User not found.")
     },
 
     getUpcomingAppointments: (req, res) => {
