@@ -1,7 +1,8 @@
 require('dotenv').config();
 const bcrypt = require("bcryptjs");
 const salt = bcrypt.genSaltSync(10);
-const Sequelize = require("sequelize");
+const {Sequelize, DataTypes} = require("sequelize");
+// const db = require('_helpers/db');
 
 const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
     dialect: 'postgres',
@@ -27,36 +28,33 @@ module.exports = {
     },
 
     login: (req, res) => {
-        console.log(req.body); //getting blank object here 
+        console.log(req.body);
         const {email, password} = req.body;
     //     for (let i = 0; i < users.length; i++) {
     //         if (users[i].email === email) {
-    //           const authenticated = bcrypt.compareSync(password, users[i].password)
+    //          const authenticated = bcrypt.compareSync(password, users[i].        password)
     //           if (authenticated) {
     //             let userToReturn = {...users[i]}
     //             // delete userToReturn.password
     //             res.status(200).send(userToReturn)
     //           }
     //         }
-    //     }res.status(400).send("User not found.")
+    //     }res.status(401).send("User not found.")
     // },
-        try {
-            const user = URLSearchParams.findOne({email});
-            const hashPassword = bcrypt.compareSync(password, user.password);
-            if (!user) {
-                res.status(401).json({error: "User not found"})
-            } else if (hashPassword) {
-                res.status(200).json({
-                    message: "Login successful",
-                    user,
-                })
-            }
-        } catch (error) {
-            res.status(400).json({
-                message: "An error ocurred",
-                error: error.message,
-            })
+        const user = sequelize.query(`
+        SELECT * FROM users
+        WHERE email = '${email}';
+        `);
+        console.log(user);
+        const authenticated = bcrypt.compareSync(password, user.        password);
+        if (authenticated) {
+            res.status(200).send("User found.");
+        } else {
+            res.status(401).send("No user found.");
         }
+        
+        // const authenticated = bcrypt.compareSync(password, user.password)
+        // console.log(authenticated);
     },
 
     getUpcomingAppointments: (req, res) => {
