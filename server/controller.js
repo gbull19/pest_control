@@ -1,8 +1,7 @@
 require('dotenv').config();
 const bcrypt = require("bcryptjs");
 const salt = bcrypt.genSaltSync(10);
-const {Sequelize, DataTypes} = require("sequelize");
-// const db = require('_helpers/db');
+const {Sequelize, OP} = require("sequelize");
 
 const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
     dialect: 'postgres',
@@ -38,29 +37,23 @@ module.exports = {
     login: (req, res) => {
         // console.log(req.body);
         const {email, password} = req.body;
-    //     for (let i = 0; i < users.length; i++) {
-    //         if (users[i].email === email) {
-    //          const authenticated = bcrypt.compareSync(password, users[i].        password)
-    //           if (authenticated) {
-    //             let userToReturn = {...users[i]}
-    //             // delete userToReturn.password
-    //             res.status(200).send(userToReturn)
-    //           }
-    //         }
-    //     }res.status(401).send("User not found.")
-    // },
-        axios.get(process.env.CONNECTION_STRING, {
-            auth: {
-                email,
-                password
+        sequelize.query(`
+            SELECT user_id from users
+            WHERE email = '${email}'
+            AND password = '${password}'
+            `)
+        .then(dbres => {
+            if (typeof(dbres[0][0].user_id)!='number') {
+                console.log(dbres[0][0].user_id);
+                res.sendStatus(401);  
+            } else {
+                console.log(dbres[0][0].user_id);
+                res.sendStatus(200).send(dbres[0][0].user_id);
             }
-        })
-        .then(({data}) => {
-            res.status(200).json(data);
         })
         .catch((error) => {
             console.log(error);
-            res.status(500);
+            res.sendStatus(403);
         });
     },
 
