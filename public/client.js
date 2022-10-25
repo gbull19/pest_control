@@ -13,8 +13,10 @@ const register = body => axios.post('http://localhost:8444/api/register', body)
   }).catch(err => {console.log(err)
     alert('Uh oh. Your request did not work.')
   })
+
 const registerSubmitHandler= event => {
   event.preventDefault();
+
   let first_name = document.querySelector('#first_name');
   let last_name = document.querySelector('#last_name');
   let email = document.querySelector('#email');
@@ -23,39 +25,42 @@ const registerSubmitHandler= event => {
   let state = document.querySelector('#state');
   let password = document.querySelector('#password');
   let confirm_password = document.querySelector('#confirm_password');
-  // const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-  // let cancelled = true;
-  // switch (true) {
-  //   case (password.length >= 10 && /[0-9]/.test(password) && specialChars.test(password) && /[a-z]/.test(password)  && /[A-Z]/.test(password)):
-  //     console.log("Password saved successfully!");
-  //     cancelled = false;
-  //     break;
-  //   case (password.value !== confirm_password.value):
-  //     alert("Your passwords need to match.");
-  //     break;
-  //   case (!password.length >= 10):
-  //     alert("Password must contain at least 10 characters.");
-  //     break;
-  //   case (!/[0-9]/.test(password)):
-  //     alert("Password must contain at least one number.");
-  //     break;
-  //   case (!/[a-z]/.test(password) || !/[A-Z]/.test(password)):
-  //     alert("Password must contain at least one lowercase and one uppercase letter.");
-  //     break;
-  //   case (!specialChars.test(password)):
-  //     alert("Password must contain at least one special character.");
-  //     break;
-  //   default:
-  //     alert("Please choose another password.");
-  //     break;
-  // };
-  // if (cancelled) {
-  //   return false;
-  // };
-  if (password.value !== confirm_password.value) {
-    alert("Your passwords need to match.");
-      return false;
-  }
+
+  let errors = []
+  const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+  switch(true) {
+    case (password.value !== confirm_password.value):
+      errors.push({message: "Your passwords need to match."});
+      break;
+    // length case is not working
+    case (!((password.value).length) >= 10):
+      errors.push({message: "Password must contain at least 10 characters."});
+      break;
+    case (!/[0-9]+/g.test(password.value)): 
+      errors.push({message: "Password must contain at least one number."});
+      break;
+    case (!/[a-z]+/g.test(password.value)):
+      errors.push({message: "Password must contain at least one lowercase letter."});
+      break;
+    case (!/[A-Z]+/g.test(password.value)):
+      errors.push({message: "Password must contain at least one uppercase letter."});
+      break;
+    case (!specialChars.test(password.value)):
+      errors.push({message: "Password must contain at least one special character."});
+      break;
+    default:
+      true;
+      break;
+  };
+  if (errors.length > 0) {
+    alert(`${errors[0].message}`);
+    return errors;
+  } else if (errors.length == 0) {
+    console.log("Password saved successfully")
+  } else {
+    alert("Please choose another password.")
+  };
+
   let bodyObj = {
     first_name: first_name.value,
     last_name: last_name.value,
@@ -71,11 +76,14 @@ const registerSubmitHandler= event => {
 
 const registerToggleHandler = e => {
   e.preventDefault();
+
   registerDiv.classList.remove("active");
   loginDiv.classList.add("active");
 };
+
 const loginToggleHandler = e => {
   e.preventDefault();
+
   loginDiv.classList.remove("active");
   registerDiv.classList.add("active");
 };
@@ -90,16 +98,19 @@ const login = (body) => axios.post('http://localhost:8444/api/login', body)
 
 const loginSubmitHandler = event => {
   event.preventDefault();
+
   let email = document.querySelector('#loginEmail');
   let password = document.querySelector('#loginPassword');
+
   let bodyObj = {
     email: email.value,
     password: password.value
-  };
-  console.table(bodyObj); //bodyObj successfully created
-  login(bodyObj);
-  email.value = '';
-  password.value = '';
+  }
+
+  login(bodyObj)
+
+  email.value = ''
+  password.value = ''
 };
 
 registerForm.addEventListener('submit', registerSubmitHandler);

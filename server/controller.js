@@ -24,11 +24,14 @@ module.exports = {
         .then(() => {
             console.log('Registration complete')
             res.sendStatus(200)
-        }).catch(err => console.log('Error seeding DB', err))
+        }).catch(err => 
+            console.log('Error seeding DB', err),
+            res.status(400)
+        );
     },
 
     login: (req, res) => {
-        console.log(req.body);
+        // console.log(req.body);
         const {email, password} = req.body;
     //     for (let i = 0; i < users.length; i++) {
     //         if (users[i].email === email) {
@@ -41,20 +44,19 @@ module.exports = {
     //         }
     //     }res.status(401).send("User not found.")
     // },
-        const user = sequelize.query(`
-        SELECT * FROM users
-        WHERE email = '${email}';
-        `);
-        console.log(user);
-        const authenticated = bcrypt.compareSync(password, user.        password);
-        if (authenticated) {
-            res.status(200).send("User found.");
-        } else {
-            res.status(401).send("No user found.");
-        }
-        
-        // const authenticated = bcrypt.compareSync(password, user.password)
-        // console.log(authenticated);
+        axios.get(process.env.CONNECTION_STRING, {
+            auth: {
+                email,
+                password
+            }
+        })
+        .then(({data}) => {
+            res.status(200).json(data);
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(500);
+        });
     },
 
     getUpcomingAppointments: (req, res) => {
@@ -68,21 +70,58 @@ module.exports = {
     seed: (req, res) => {
         sequelize.query(`
             DROP TABLE IF EXISTS users;
+            DROP TABLE IF EXISTS user_address;
+            DROP TABLE IF EXISTS appts;
+            DROP TABLE IF EXISTS appt_pests;
+
 
             CREATE TABLE users (
                 user_id SERIAL PRIMARY KEY,
                 first_name VARCHAR(50) NOT NULL,
                 last_name VARCHAR(50) NOT NULL,
-                email VARCHAR(75) NOT NULL,
+                email VARCHAR(75) NOT NULL UNIQUE,
+                password VARCHAR(255) NOT NULL,
+                is_tech BOOLEAN NOT NULL
+            );     
+            
+            CREATE TABLE user_address (
+                user_address_id SERIAL PRIMARY KEY,
                 street_address VARCHAR(300) NOT NULL,
                 city VARCHAR(75) NOT NULL,
                 state VARCHAR(50) NOT NULL,
-                is_tech BIT, 
-                password VARCHAR(100) NOT NULL
+                user_id INTEGER NOT NULL REFERENCES users(user_id)
             );
 
-            INSERT INTO users (first_name, last_name, email, street_address, city, state, is_tech, password)
-            VALUES ('Garrett', 'Bull', 'garrett@bull.com', '123 W 456 N', 'Orem', 'Utah', '1', '123456');
+            CREATE TABLE appts (
+                appt_id SERIAL PRIMARY KEY,
+                appt_date DATE NOT NULL,
+                interior BOOLEAN NOT NULL,
+                user_id INTEGER NOT NULL REFERENCES users(user_id)
+                );
+
+            CREATE TABLE appt_pests (
+                appt_pests_id SERIAL PRIMARY KEY,
+                pest_01 VARCHAR(40) NOT NULL,
+                pest_02 VARCHAR(40),
+                pest_03 VARCHAR(40),
+                pest_04 VARCHAR(40),
+                pest_05 VARCHAR(40),
+                appt_id INTEGER NOT NULL REFERENCES appts(appt_id)
+            );         
+
+            INSERT INTO users (first_name, last_name, email, password, is_tech)
+            VALUES ('Garrett', 'Bull', 'garrett@bull.com', 'NoMorePests1!', '1'),
+            ('Tony', 'Stark', 'tony@starkent.com', '1LuvPepper!', '0');
+
+            INSERT INTO user_address (street_address, city, state, user_id)
+            VALUES ('123 N 456 W', 'Orem', 'Utah', '1'),
+            ('10880 Malibu Point', 'Malibu', 'California', '2');
+
+            INSERT INTO appts (appt_date, interior, user_id)
+            VALUES ('2022-10-01', '1', '2');
+
+            INSERT INTO appt_pests (pest_01, appt_id)
+            VALUES ('Spiders', '1');
         `).then(() => {
             console.log('DB seeded')
             res.sendStatus(200)
