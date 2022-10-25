@@ -56,7 +56,7 @@ const registerSubmitHandler= event => {
     alert(`${errors[0].message}`);
     return errors;
   } else if (errors.length == 0) {
-    console.log("Password saved successfully")
+    console.log("Password accepted.")
   } else {
     alert("Please choose another password.")
   };

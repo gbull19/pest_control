@@ -18,8 +18,13 @@ module.exports = {
         const {first_name, last_name, email, street_address, city, state, is_tech, password} = req.body;
         const hashPassword = bcrypt.hashSync(password, salt);
         sequelize.query(`
-        INSERT INTO users (first_name, last_name, email, street_address, city, state, is_tech, password)
-        VALUES ('${first_name}', '${last_name}', '${email}', '${street_address}', '${city}', '${state}', '${is_tech}', '${hashPassword}');
+            WITH ins AS (
+                INSERT INTO users (first_name, last_name, email, password, is_tech)
+                VALUES ('${first_name}', '${last_name}', '${email}', '${hashPassword}', '0')
+                RETURNING user_id
+            )
+            INSERT INTO user_address (street_address, city, state, user_id)
+            VALUES ('${street_address}', '${city}', '${state}', (SELECT user_id FROM ins));
         `)
         .then(() => {
             console.log('Registration complete')
@@ -69,44 +74,51 @@ module.exports = {
 
     seed: (req, res) => {
         sequelize.query(`
-            DROP TABLE IF EXISTS users;
-            DROP TABLE IF EXISTS user_address;
-            DROP TABLE IF EXISTS appts;
             DROP TABLE IF EXISTS appt_pests;
+            DROP TABLE IF EXISTS appts;
+            DROP TABLE IF EXISTS user_address;
+            DROP TABLE IF EXISTS users;
 
 
             CREATE TABLE users (
-                user_id SERIAL PRIMARY KEY,
+                user_id SERIAL,
                 first_name VARCHAR(50) NOT NULL,
                 last_name VARCHAR(50) NOT NULL,
                 email VARCHAR(75) NOT NULL UNIQUE,
                 password VARCHAR(255) NOT NULL,
-                is_tech BOOLEAN NOT NULL
+                is_tech BOOLEAN NOT NULL,
+                PRIMARY KEY (user_id)
             );     
             
             CREATE TABLE user_address (
-                user_address_id SERIAL PRIMARY KEY,
+                user_address_id SERIAL,
                 street_address VARCHAR(300) NOT NULL,
                 city VARCHAR(75) NOT NULL,
                 state VARCHAR(50) NOT NULL,
-                user_id INTEGER NOT NULL REFERENCES users(user_id)
+                user_id INTEGER NOT NULL,
+                PRIMARY KEY (user_address_id),
+                CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id)
             );
 
             CREATE TABLE appts (
-                appt_id SERIAL PRIMARY KEY,
+                appt_id SERIAL,
                 appt_date DATE NOT NULL,
                 interior BOOLEAN NOT NULL,
-                user_id INTEGER NOT NULL REFERENCES users(user_id)
+                user_id INTEGER NOT NULL,
+                PRIMARY KEY (appt_id),
+                CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id)
                 );
 
             CREATE TABLE appt_pests (
-                appt_pests_id SERIAL PRIMARY KEY,
+                appt_pests_id SERIAL,
                 pest_01 VARCHAR(40) NOT NULL,
                 pest_02 VARCHAR(40),
                 pest_03 VARCHAR(40),
                 pest_04 VARCHAR(40),
                 pest_05 VARCHAR(40),
-                appt_id INTEGER NOT NULL REFERENCES appts(appt_id)
+                appt_id INTEGER NOT NULL,
+                PRIMARY KEY (appt_pests_id),
+                CONSTRAINT fk_appt_id FOREIGN KEY (appt_id) REFERENCES appts(appt_id)
             );         
 
             INSERT INTO users (first_name, last_name, email, password, is_tech)
@@ -115,7 +127,7 @@ module.exports = {
 
             INSERT INTO user_address (street_address, city, state, user_id)
             VALUES ('123 N 456 W', 'Orem', 'Utah', '1'),
-            ('10880 Malibu Point', 'Malibu', 'California', '2');
+            ('10880 Malibu Point', 'Malibu', 'Utah', '2');
 
             INSERT INTO appts (appt_date, interior, user_id)
             VALUES ('2022-10-01', '1', '2');
