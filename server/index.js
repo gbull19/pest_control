@@ -1,8 +1,7 @@
 require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
-
 const app = express();
+const cors = require('cors');
 
 app.use(express.json());
 app.use(cors());
@@ -14,14 +13,17 @@ const {
     // getPastAppointments,
     login,
     register,
-    seed
+    seed,
+    testLogin,
+    authenticateToken,
+    loadDash
 } = require('./controller.js')
 
-app.get("/", (req, res) => {
-    res.render("../public/login.html");
-});
 // app.get('/upcoming', getUpcomingAppointments);
 // app.get('/appt', getPastAppointments);
+app.post('/test/login', testLogin);
+app.get('/dashboard', authenticateToken, loadDash);
+
 app.post('/api/login', login);
 app.post('/api/register', register);
 app.post('/api/seed', seed);

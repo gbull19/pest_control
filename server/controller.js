@@ -1,6 +1,7 @@
 require('dotenv').config();
 const bcrypt = require("bcryptjs");
 const salt = bcrypt.genSaltSync(10);
+const jwt = require('jsonwebtoken');
 const {Sequelize, OP} = require("sequelize");
 
 const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
@@ -30,12 +31,57 @@ module.exports = {
             res.sendStatus(200)
         }).catch(err => 
             console.log('Error seeding DB', err),
-            res.status(400)
+            res.sendStatus(400)
         );
     },
 
+    loadDash: (req, res) => {
+        // const {email, password} = req.body
+        const email = 'tony@starkent.com'
+        const password = '1LuvPepper!'
+        sequelize.query(`
+            SELECT * FROM appts a
+            JOIN users u ON a.user_id = u.user_id
+            WHERE u.email = '${email}' AND u.password = '${password}';
+        `)
+        .then(dbres => 
+            {console.table(dbres[0][0]);
+            res.sendStatus(200).json(dbres[0][0].user_id);
+        })
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(403);
+        });
+    },
+
+    authenticateToken: (req, res, next) => {
+        const authHeader = req.headers["authorization"]
+        const token = authHeader && authHeader.split(' ')[1]
+        if (token == null) return res.sendStatus(401)
+        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+            if (err) { return res.sendStatus(403) }
+            else {
+                req.user = user
+                next()
+                return
+            }
+            
+        })
+    },
+
+    testLogin: (req, res) => {
+        // Authenticates user
+        const {email, password} = req.body
+        const user = { 
+            email: email,
+            password: password
+        }
+
+        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+        res.json({ accessToken: accessToken})
+    },
+
     login: (req, res) => {
-        // console.log(req.body);
         const {email, password} = req.body;
         sequelize.query(`
             SELECT user_id from users
@@ -48,7 +94,7 @@ module.exports = {
                 res.sendStatus(401);  
             } else {
                 console.log(dbres[0][0].user_id);
-                res.sendStatus(200).send(dbres[0][0].user_id);
+                res.sendStatus(200).JSON(dbres[0][0].user_id);
             }
         })
         .catch((error) => {
@@ -123,10 +169,12 @@ module.exports = {
             ('10880 Malibu Point', 'Malibu', 'Utah', '2');
 
             INSERT INTO appts (appt_date, interior, user_id)
-            VALUES ('2022-10-01', '1', '2');
+            VALUES ('2022-07-26', '1', '2'),
+            ('2022-10-01', '1', '2');
 
             INSERT INTO appt_pests (pest_01, appt_id)
-            VALUES ('Spiders', '1');
+            VALUES ('Spiders', '1'),
+            ('Spiders', '2');
         `).then(() => {
             console.log('DB seeded')
             res.sendStatus(200)

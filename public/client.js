@@ -91,7 +91,8 @@ const loginToggleHandler = e => {
 const login = (body) => axios.post('http://localhost:8444/api/login', body)
 .then(res => {
   alert("Login successful!");
-  //redirect to account page
+  window.sessionStorage.setItem("athorized", true)
+  window.location.href = "http://localhost:5500/Pest_control/public/dashboard.html"
 }).catch(err => {console.log(err)
   alert('Uh oh. Your request did not work.')
 })

@@ -1,0 +1,12 @@
+POST http://localhost:8444/api/seed
+###
+GET http://localhost:8444/dashboard
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbnlAc3RhcmtlbnQuY29tIiwicGFzc3dvcmQiOiIxTHV2UGVwcGVyISIsImlhdCI6MTY2Njc2NzIxMH0.CjH_DbVXsGYqwKrTC3L56LCFL9-FLQz11xF3_sEhHZA
+###
+POST http://localhost:8444/test/login
+Content-Type: application/json
+
+{
+    "email": "tony@starkent.com",
+    "password": "1LuvPepper!"
+}

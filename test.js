@@ -15,6 +15,11 @@ Date.prototype.addHours = function(h) {
     return this;   
  }
 
+// Passwords: NoMorePests1! $2a$10$xWrycnkV2IChdBOHLL4OZeSVoTXt2t7EakBSMbUgHwT3poZA9cXzS
+// 1LuvPepper! $2a$10$JIdkbPVQCzKeuNaG/EgsoOAURbgn84jhP7BLN1TZC3hM43Fs0z7XK
+
+
+
 //  <!-- LOGIN.html --->
 
 // <input type="text" id="name" name="name" />
