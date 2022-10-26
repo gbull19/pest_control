@@ -36,70 +36,52 @@ module.exports = {
     },
 
     loadDash: (req, res) => {
-        // const {email, password} = req.body
-        const email = 'tony@starkent.com'
-        const password = '1LuvPepper!'
         sequelize.query(`
-            SELECT * FROM appts a
-            JOIN users u ON a.user_id = u.user_id
-            WHERE u.email = '${email}' AND u.password = '${password}';
+            SELECT * FROM appts 
+            WHERE user_id = '2';
         `)
-        .then(dbres => 
-            {console.table(dbres[0][0]);
-            res.sendStatus(200).json(dbres[0][0].user_id);
+        // sequelize.query(`
+        //     SELECT * FROM appts a
+        //     JOIN users u ON u.user_id = a.user_id;
+        // `)
+        .then(dbres =>{
+            console.log(dbres[0]);
+            res.status(200).json({message: 'loadDash successful'});
         })
         .catch(err => {
             console.log(err);
-            res.sendStatus(403);
+            res.status(403).json({message: 'error loading loadDash'});
         });
     },
 
-    authenticateToken: (req, res, next) => {
+    authenticateToken: async (req, res, next) => {
         const authHeader = req.headers["authorization"]
         const token = authHeader && authHeader.split(' ')[1]
-        if (token == null) return res.sendStatus(401)
-        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-            if (err) { return res.sendStatus(403) }
-            else {
-                req.user = user
-                next()
-                return
-            }
-            
-        })
-    },
-
-    testLogin: (req, res) => {
-        // Authenticates user
-        const {email, password} = req.body
-        const user = { 
-            email: email,
-            password: password
-        }
-
-        const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
-        res.json({ accessToken: accessToken})
+        if (!token) return res.status(401)
+        const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+        next()
     },
 
     login: (req, res) => {
         const {email, password} = req.body;
         sequelize.query(`
-            SELECT user_id from users
+            SELECT * from users
             WHERE email = '${email}'
             AND password = '${password}'
             `)
         .then(dbres => {
-            if (typeof(dbres[0][0].user_id)!='number') {
-                console.log(dbres[0][0].user_id);
-                res.sendStatus(401);  
-            } else {
-                console.log(dbres[0][0].user_id);
-                res.sendStatus(200).JSON(dbres[0][0].user_id);
+            let dbObj = dbres[0][0];
+            const {email, user_id} = dbObj;
+            let user = {
+                email: email,
+                user_id: user_id
             }
+            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+            res.status(200).json({ accessToken: accessToken})
         })
         .catch((error) => {
             console.log(error);
-            res.sendStatus(403);
+            res.status(403).json({ message: "Error retriving information"});
         });
     },
 
@@ -177,7 +159,7 @@ module.exports = {
             ('Spiders', '2');
         `).then(() => {
             console.log('DB seeded')
-            res.sendStatus(200)
+            res.status(200)
         }).catch(err => console.log('Error seeding DB', err))
     }
 };

@@ -14,14 +14,12 @@ const {
     login,
     register,
     seed,
-    testLogin,
     authenticateToken,
     loadDash
 } = require('./controller.js')
 
 // app.get('/upcoming', getUpcomingAppointments);
 // app.get('/appt', getPastAppointments);
-app.post('/test/login', testLogin);
 app.get('/dashboard', authenticateToken, loadDash);
 
 app.post('/api/login', login);
