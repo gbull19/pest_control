@@ -15,21 +15,25 @@ const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
 });
 
 module.exports = {
-    register: (req, res) => {
+    register: async (req, res) => {
         const {first_name, last_name, email, street_address, city, state, is_tech, password} = req.body;
         const hashPassword = bcrypt.hashSync(password, salt);
-        sequelize.query(`
-            WITH ins AS (
+        await sequelize.query(
+            `WITH ins AS (
                 INSERT INTO users (first_name, last_name, email, password, is_tech)
-                VALUES ('${first_name}', '${last_name}', '${email}', '${hashPassword}', '0')
+                VALUES ( ?, ?, ?, '${hashPassword}', '0')
                 RETURNING user_id
             )
             INSERT INTO user_address (street_address, city, state, user_id)
-            VALUES ('${street_address}', '${city}', '${state}', (SELECT user_id FROM ins));
-        `)
+            VALUES (?, ?, ?, (SELECT user_id FROM ins))`,
+            {
+                replacements: [first_name, last_name, email, street_address, city, state],
+                type: QueryTypes.INSERT
+            }
+        )
         .then(() => {
             console.log('Registration complete')
-            res.status(200)
+            res.status(200).json({message: "Registration successful"})
         }).catch(err => 
             console.log('Error seeding DB', err),
             res.status(400)
@@ -62,21 +66,29 @@ module.exports = {
 
     login: async (req, res) => {
         const {email, password} = req.body;
-        let userPassword =  await sequelize.query(`
-            SELECT password from users
-            WHERE email = '${email}';
-            `);
-        userPassword = userPassword[0][0].password;
-        const authenticated = bcrypt.compareSync(password, userPassword);
+        let hashPassword =  await sequelize.query(
+            `SELECT password FROM users
+            WHERE email = ?`,
+            {
+                replacements: [email],
+                type: QueryTypes.INSERT
+            }
+            );
+        hashPassword = hashPassword[0][0].password;
+        const authenticated = bcrypt.compareSync(password, hashPassword);
             if(!authenticated) { 
                 res.status(401).json({message: "Email and Password do not match. Please try again."})
                 return
             }
-            sequelize.query(`
-                SELECT email, user_id from users
-                WHERE email = '${email}'
-                AND password = '${userPassword}';
-                `)
+            sequelize.query(
+                `SELECT email, user_id FROM users
+                WHERE email = ?
+                AND password = '${hashPassword}'`,
+                {
+                    replacements: [email],
+                    type: QueryTypes.INSERT
+                }
+                )
         .then(dbres => {
             let dbObj = dbres[0][0];
             const {email, user_id} = dbObj;
