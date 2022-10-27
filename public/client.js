@@ -6,6 +6,8 @@ const loginForm = document.getElementById("login");
 const loginToggle = document.getElementById("login_toggle");
 const loginDiv = document.getElementById("loginDiv");
 
+
+//register functions
 const register = body => axios.post('http://localhost:8444/api/register', body)
   .then(res => {
     alert("Account registered successfully!");
@@ -32,8 +34,7 @@ const registerSubmitHandler= event => {
     case (password.value !== confirm_password.value):
       errors.push({message: "Your passwords need to match."});
       break;
-    // length case is not working
-    case (!((password.value).length) >= 10):
+    case (password.value.length < 10):
       errors.push({message: "Password must contain at least 10 characters."});
       break;
     case (!/[0-9]+/g.test(password.value)): 
@@ -74,6 +75,8 @@ const registerSubmitHandler= event => {
   register(bodyObj);
 }
 
+
+//form toggle handlers
 const registerToggleHandler = e => {
   e.preventDefault();
 
@@ -88,12 +91,14 @@ const loginToggleHandler = e => {
   registerDiv.classList.add("active");
 };
 
+
+//login
 const login = (body) => axios.post('http://localhost:8444/api/login', body)
 .then(res => {
   alert("Login successful!");
   window.location.href = "http://localhost:5500/Pest_control/public/dashboard.html"
 }).catch(err => {console.log(err)
-  alert('Uh oh. Your request did not work.')
+  alert('Email and Password do not match. Please try again.')
 })
 
 const loginSubmitHandler = event => {
@@ -110,6 +115,8 @@ const loginSubmitHandler = event => {
   login(bodyObj)
 };
 
+
+//event listeners
 registerForm.addEventListener('submit', registerSubmitHandler);
 registerToggle.addEventListener('click', registerToggleHandler);
 

@@ -2,6 +2,7 @@ require('dotenv').config();
 const bcrypt = require("bcryptjs");
 const salt = bcrypt.genSaltSync(10);
 const jwt = require('jsonwebtoken');
+// const atob = require("atob");
 const {Sequelize, OP} = require("sequelize");
 
 const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
@@ -28,29 +29,26 @@ module.exports = {
         `)
         .then(() => {
             console.log('Registration complete')
-            res.sendStatus(200)
+            res.status(200)
         }).catch(err => 
             console.log('Error seeding DB', err),
-            res.sendStatus(400)
+            res.status(400)
         );
     },
 
     loadDash: (req, res) => {
+        //try to capture token
         sequelize.query(`
             SELECT * FROM appts 
             WHERE user_id = '2';
         `)
-        // sequelize.query(`
-        //     SELECT * FROM appts a
-        //     JOIN users u ON u.user_id = a.user_id;
-        // `)
         .then(dbres =>{
             console.log(dbres[0]);
             res.status(200).json({message: 'loadDash successful'});
         })
         .catch(err => {
             console.log(err);
-            res.status(403).json({message: 'error loading loadDash'});
+            res.status(403).json({message: 'error running loadDash'});
         });
     },
 
@@ -62,14 +60,25 @@ module.exports = {
         next()
     },
 
-    login: (req, res) => {
+    login: async (req, res) => {
         const {email, password} = req.body;
-        sequelize.query(`
-            SELECT * from users
+        let userPassword =  await sequelize.query(`
+            SELECT password from users
+            WHERE email = '${email}';
+            `);
+        userPassword = userPassword[0][0].password;
+        const authenticated = bcrypt.compareSync(password, userPassword);
+            if(!authenticated) {res.status(401).json({message: "Email and Password do not match. Please try again."})
+            return;
+            };
+        //working to this point
+        await sequelize.query(`
+            SELECT email, user_id from users
             WHERE email = '${email}'
-            AND password = '${password}'
+            AND password = '${password}';
             `)
         .then(dbres => {
+            console.log(dbres);
             let dbObj = dbres[0][0];
             const {email, user_id} = dbObj;
             let user = {
@@ -81,7 +90,7 @@ module.exports = {
         })
         .catch((error) => {
             console.log(error);
-            res.status(403).json({ message: "Error retriving information"});
+            res.status(403).json({ message: "Error retrieving information"});
         });
     },
 
@@ -143,8 +152,8 @@ module.exports = {
             );         
 
             INSERT INTO users (first_name, last_name, email, password, is_tech)
-            VALUES ('Garrett', 'Bull', 'garrett@bull.com', 'NoMorePests1!', '1'),
-            ('Tony', 'Stark', 'tony@starkent.com', '1LuvPepper!', '0');
+            VALUES ('Garrett', 'Bull', 'garrett@bull.com', '$2a$10$S6zbkDxnW97kHuhEng8uZu3DZHrOUsGmtr9edMiNa148p43ePBeou', '1'),
+            ('Tony', 'Stark', 'tony@starkent.com', '$2a$10$n.qwi1yUq65UHeS9Pb6Jq.2k2faZvT5rxD1bK8TeykAHW/9sWYykG', '0');
 
             INSERT INTO user_address (street_address, city, state, user_id)
             VALUES ('123 N 456 W', 'Orem', 'Utah', '1'),
