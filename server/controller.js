@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const salt = bcrypt.genSaltSync(10);
 const jwt = require('jsonwebtoken');
 // const atob = require("atob");
-const {Sequelize, OP} = require("sequelize");
+const {Sequelize, OP, QueryTypes} = require("sequelize");
 
 const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
     dialect: 'postgres',
@@ -68,17 +68,16 @@ module.exports = {
             `);
         userPassword = userPassword[0][0].password;
         const authenticated = bcrypt.compareSync(password, userPassword);
-            if(!authenticated) {res.status(401).json({message: "Email and Password do not match. Please try again."})
-            return;
-            };
-        //working to this point
-        await sequelize.query(`
-            SELECT email, user_id from users
-            WHERE email = '${email}'
-            AND password = '${password}';
-            `)
+            if(!authenticated) { 
+                res.status(401).json({message: "Email and Password do not match. Please try again."})
+                return
+            }
+            sequelize.query(`
+                SELECT email, user_id from users
+                WHERE email = '${email}'
+                AND password = '${userPassword}';
+                `)
         .then(dbres => {
-            console.log(dbres);
             let dbObj = dbres[0][0];
             const {email, user_id} = dbObj;
             let user = {
