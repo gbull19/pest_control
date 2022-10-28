@@ -20,8 +20,7 @@ const {
 
 // app.get('/upcoming', getUpcomingAppointments);
 // app.get('/appt', getPastAppointments);
-app.get('/dashboard', authenticateToken, loadDash);
-
+app.post('/dashboard', authenticateToken, loadDash);
 app.post('/api/login', login);
 app.post('/api/register', register);
 app.post('/api/seed', seed);

@@ -93,12 +93,27 @@ const loginToggleHandler = e => {
 
 
 //login
+const loginRedirect = (body) => {
+  axios.post('http://localhost:8444/dashboard', body)
+  .then(res => {
+    console.log('loadDash successful');
+    console.log(res.data);
+  })
+  .catch(err => {console.log(err)
+    alert('Invalid credentials. Please try again.')
+  })
+}
+
 const login = (body) => axios.post('http://localhost:8444/api/login', body)
 .then(res => {
+  const tokenObj = {
+    token: res.data.accessToken
+  }
   alert("Login successful!");
-  window.location.href = "http://localhost:5500/Pest_control/public/dashboard.html"
+  loginRedirect(tokenObj);
+  // window.location.href = "http://localhost:5500/Pest_control/public/dashboard.html"
 }).catch(err => {console.log(err)
-  alert('Email and Password do not match. Please try again.')
+  alert('Invalid credentials. Please try again.')
 })
 
 const loginSubmitHandler = event => {

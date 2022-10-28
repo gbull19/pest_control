@@ -2,7 +2,8 @@ require('dotenv').config();
 const bcrypt = require("bcryptjs");
 const salt = bcrypt.genSaltSync(10);
 const jwt = require('jsonwebtoken');
-// const atob = require("atob");
+const {ACCESS_TOKEN_SECRET} = process.env;
+const atob = require("atob");
 const {Sequelize, OP, QueryTypes} = require("sequelize");
 
 const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
@@ -41,14 +42,18 @@ module.exports = {
     },
 
     loadDash: (req, res) => {
-        //try to capture token
+        const token = req.body.token;
+        const base64Url = token.split(".")[1];
+        const base64 = base64Url.replace("-", "+").replace("_","/");
+        const tokenData = JSON.parse(atob(base64));
+        const {email, user_id} = tokenData;
         sequelize.query(`
             SELECT * FROM appts 
-            WHERE user_id = '2';
+            WHERE user_id = '${user_id}';
         `)
         .then(dbres =>{
-            console.log(dbres[0]);
-            res.status(200).json({message: 'loadDash successful'});
+            const appts = dbres[0]
+            res.status(200).json({message: 'loadDash successful', email, user_id, appts});
         })
         .catch(err => {
             console.log(err);
@@ -57,10 +62,12 @@ module.exports = {
     },
 
     authenticateToken: async (req, res, next) => {
-        const authHeader = req.headers["authorization"]
-        const token = authHeader && authHeader.split(' ')[1]
+        const token = req.body.token;
+        // const authHeader = req.headers["authorization"]
+        // const token = authHeader && authHeader.split(' ')[1] //returns last truthy value
         if (!token) return res.status(401)
-        const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+        const decoded = jwt.verify(token, ACCESS_TOKEN_SECRET)
+        if (!decoded) return res.status(401)
         next()
     },
 
@@ -90,13 +97,13 @@ module.exports = {
                 }
                 )
         .then(dbres => {
-            let dbObj = dbres[0][0];
+            let [[dbObj]] = dbres;
             const {email, user_id} = dbObj;
             let user = {
                 email: email,
                 user_id: user_id
             }
-            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+            const accessToken = jwt.sign(user, ACCESS_TOKEN_SECRET)
             res.status(200).json({ accessToken: accessToken})
         })
         .catch((error) => {
