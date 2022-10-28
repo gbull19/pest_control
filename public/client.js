@@ -6,6 +6,16 @@ const loginForm = document.getElementById("login");
 const loginToggle = document.getElementById("login_toggle");
 const loginDiv = document.getElementById("loginDiv");
 
+// window.onscroll = function() {myFunction()};
+// let navbar = document.querySelector(".navbar");
+// let stick = navbar.offsetTop;
+// const myFunction = () => {
+//   if (window.pageYOffset >= sticky) {
+//     navbar.classList.add("sticky")
+//   } else {
+//     navbar.classList.remove("sticky");
+//   }
+// }
 
 //register functions
 const register = body => axios.post('http://localhost:8444/api/register', body)
