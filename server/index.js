@@ -10,7 +10,7 @@ const {SERVER_PORT} = process.env;
 
 const {
     // getUpcomingAppointments,
-    // getPastAppointments,
+    getAllAppts,
     login,
     register,
     seed,
@@ -20,6 +20,7 @@ const {
 
 // app.get('/upcoming', getUpcomingAppointments);
 // app.get('/appt', getPastAppointments);
+app.get('/api/getallappts', getAllAppts)
 app.post('/dashboard', authenticateToken, loadDash);
 app.post('/api/login', login);
 app.post('/api/register', register);
