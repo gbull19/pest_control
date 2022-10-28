@@ -11,10 +11,9 @@ h1 {
 
 .header_container {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: left;
     /* position: sticky;
     top: 0; */
     width: 100%;
@@ -22,14 +21,13 @@ h1 {
     background-color:whitesmoke;
     font-family: Helvetica Light;
     font-style: bold;
-    margin: 0px;
-    padding: 0px;
-    /* box-shadow: 0 1px 20px 1px rgb(0 0 0); */
+    /* margin: 0px;
+    padding: 0px; */
 }
 
 .header_logo {
-    /* justify-self: flex-start;
-    align-items: center; */
+    justify-self: flex-start;
+    align-items: center;
     scale: 60%;
     margin: 0px;
     padding: 0px;
@@ -156,18 +154,42 @@ h1 {
 
 .main_body_div {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
     width: 100%;
     font-family: helvetica;
     font-size: 22px;
     color: #32333e;
-    background-color: #eae9e7;
+    background-color: #ebe9e7;
     margin: 0px;
 }
 
-.main_body {
+.text_body_div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 40%;
+    font-family: helvetica;
+    font-size: 22px;
+    color: #32333e;
+    background-color: #ebe9e7;
+    margin: 0px;
+    margin-top: 50px;
+    padding: 0px;
+}
+
+.main_body_text {
     margin-left: 40px;
+}
+
+.main_body_image {
+    margin: 75px;
+    scale: 100%;
+    border: 2px solid #36578c;
+    border-radius: 600px;
+    box-shadow: 3px 3px 15px 1px #32333e;
 }
 
 #state {
@@ -181,8 +203,9 @@ h1 {
     font-size: 14px;
 }
 .container {
-    background-color: #32333e;
+    background-color: white;
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -193,11 +216,13 @@ h1 {
 }
 
 .active {
-    background-color: #32333e;
+    background-color:#ebe9e7;
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-top: 50px;
 }
 
 .login {
@@ -302,4 +327,57 @@ h1 {
     font-family: Helvetica Light;
     font-size: 16px;
     font-weight: bold;
+}
+
+.contact_form_div {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.contact_form_logo {
+    margin: 0px auto 10px;
+    display: block;
+    max-width: 175px;
+}
+
+.contact_form {
+    background-color: #ebe9e7;
+    width: 350px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 40px;
+    padding-bottom: 20px;
+
+    border-radius: 7px;
+    position: absolute;
+    box-shadow: 0 5px 25px 5px rgb(0 0 0);
+}
+
+.contact_form_input {
+    width: 100%;
+    margin-bottom: 5px;
+    height: 25px;
+    padding-left: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-family: Helvetica Light;
+    font-size: 14px;
+}
+
+.contact_form_message {
+    width: 99%;
+    margin-top: 3px;
+    height: 75px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-family: Helvetica Light;
+    font-size: 14px;
 }
