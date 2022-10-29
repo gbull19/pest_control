@@ -1,7 +1,16 @@
 POST http://localhost:8444/api/seed
 ###
-GET http://localhost:8444/dashboard
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvbnlAc3RhcmtlbnQuY29tIiwicGFzc3dvcmQiOiIxTHV2UGVwcGVyISIsImlhdCI6MTY2Njc5NzMwOH0.RRC4yIapIE8Uzu_o45knsrVw051Y5QzQkbVHLHKgBnc
+POST http://localhost:8444/api/login HTTP/1.1
+content-type: application/json
+Authorization: token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdhcnJldHRAYnVsbC5jb20iLCJ1c2VyX2lkIjoxLCJpYXQiOjE2NjcwMjc4MDUsImV4cCI6MTY2NzExNDIwNX0.VxaPGM9yyzKqXi793bvKTP1U7DvLLL5L8_b3i4OQ02Q
+{
+    "email": "garrett@bull.com",
+    "password": "NoMorePests1!"
+}
+###
+GET http://localhost:8444/private
+###
+GET http://localhost:8444/logout
 ###
 GET http://localhost:8444/api/getallappts
 ###

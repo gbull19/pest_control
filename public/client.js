@@ -6,16 +6,6 @@ const loginForm = document.getElementById("login");
 const loginToggle = document.getElementById("login_toggle");
 const loginDiv = document.getElementById("loginDiv");
 
-// window.onscroll = function() {myFunction()};
-// let navbar = document.querySelector(".navbar");
-// let stick = navbar.offsetTop;
-// const myFunction = () => {
-//   if (window.pageYOffset >= sticky) {
-//     navbar.classList.add("sticky")
-//   } else {
-//     navbar.classList.remove("sticky");
-//   }
-// }
 
 //register functions
 const register = body => axios.post('http://localhost:8444/api/register', body)
@@ -103,24 +93,9 @@ const loginToggleHandler = e => {
 
 
 //login
-const loginRedirect = (body) => {
-  axios.post('http://localhost:8444/dashboard', body)
-  .then(res => {
-    console.log('loadDash successful');
-    console.log(res.data);
-  })
-  .catch(err => {console.log(err)
-    alert('Invalid credentials. Please try again.')
-  })
-}
-
 const login = (body) => axios.post('http://localhost:8444/api/login', body)
 .then(res => {
-  const tokenObj = {
-    token: res.data.accessToken
-  }
   alert("Login successful!");
-  loginRedirect(tokenObj);
   // window.location.href = "http://localhost:5500/Pest_control/public/dashboard.html"
 }).catch(err => {console.log(err)
   alert('Invalid credentials. Please try again.')
