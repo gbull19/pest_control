@@ -76,9 +76,8 @@ module.exports = {
                 user_id: user_id
             }
             const token = jwt.sign(user, ACCESS_TOKEN_SECRET, { expiresIn: '1d'});
-            res.cookie('accessToken', token, {
-                httpOnly: true
-            }).status(200).json({message: "Successful login."});
+            res.cookie('accessToken', token, {httpOnly: true})
+            .status(200).json({message: "Successful login."});
         })
         .catch((error) => {
             console.log(error);

@@ -9,7 +9,7 @@ module.exports = {
         }
         jwt.verify(token, ACCESS_TOKEN_SECRET, (err, user) => {
             if(err){
-                return res.status(403).json('Please login again.');
+                return res.status(403).sned(alert('Please login again.'));
             }
             next();
         })

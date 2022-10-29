@@ -95,8 +95,9 @@ const loginToggleHandler = e => {
 //login
 const login = (body) => axios.post('http://localhost:8444/api/login', body)
 .then(res => {
+  console.log(res.headers);
   alert("Login successful!");
-  // window.location.href = "http://localhost:5500/Pest_control/public/dashboard.html"
+  // window.location.replace("http://localhost:8444/private");
 }).catch(err => {console.log(err)
   alert('Invalid credentials. Please try again.')
 })

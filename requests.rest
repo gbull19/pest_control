@@ -2,7 +2,7 @@ POST http://localhost:8444/api/seed
 ###
 POST http://localhost:8444/api/login HTTP/1.1
 content-type: application/json
-Authorization: token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdhcnJldHRAYnVsbC5jb20iLCJ1c2VyX2lkIjoxLCJpYXQiOjE2NjcwMjc4MDUsImV4cCI6MTY2NzExNDIwNX0.VxaPGM9yyzKqXi793bvKTP1U7DvLLL5L8_b3i4OQ02Q
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdhcnJldHRAYnVsbC5jb20iLCJ1c2VyX2lkIjoxLCJpYXQiOjE2NjcwNjQxODYsImV4cCI6MTY2NzE1MDU4Nn0.SOMC_CSA5ptnL4XCsiatJ7WSgjogXlw0EP8A6kxcR6M
 {
     "email": "garrett@bull.com",
     "password": "NoMorePests1!"
