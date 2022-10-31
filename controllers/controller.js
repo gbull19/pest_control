@@ -22,15 +22,15 @@ const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
 
 module.exports = {
     getHTML: (req, res) => {
-        res.sendFile(path.join(__dirname, '../index.html' ))
+        res.sendFile(path.join(__dirname, '../public/index.html' ))
     },
 
     getCSS: (req, res) => {
-        res.sendFile(path.join(__dirname, '../index.css'))
+        res.sendFile(path.join(__dirname, '../public/index.css'))
     },
 
     getJS: (req, res) => {
-        res.sendFile(path.join(__dirname, '../client.js'))
+        res.sendFile(path.join(__dirname, '../public/client.js'))
     },
 
     getUpcomingAppointments: (req, res) => {
