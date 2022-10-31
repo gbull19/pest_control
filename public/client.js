@@ -97,7 +97,7 @@ const login = (body) => axios.post('/api/login', body)
 .then(res => {
   alert("Login successful!");
   location.assign('/dashboard.html')
-  // location.assign('/private');
+  // location.assign('/private'); // authentication route is throwing an error
 }).catch(err => {console.log(err)
   alert('Invalid credentials. Please try again.')
 })
