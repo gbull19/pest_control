@@ -89,6 +89,30 @@ h1 {
     margin: 0px;
 }
 
+#all_appts {
+    display: flex;
+    flex-direction: row;
+    margin-left: 20px;
+    gap: 20px;
+}
+
+.appt-card {
+    width: 225px;
+    height: 300px;
+    margin: 20px;
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 7px solid #36578c;
+    border-radius: 15px 15px 0px 0px;
+    position: relative;
+    background: #ebe9e7;
+}
+
+/* .outline::before */
+
+
 .form_container {
     display: none;
 }
