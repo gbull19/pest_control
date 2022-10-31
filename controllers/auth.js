@@ -77,7 +77,7 @@ module.exports = {
             }
             const token = jwt.sign(user, ACCESS_TOKEN_SECRET, { expiresIn: '1d'});
             res.cookie('accessToken', token, { 
-                maxAge: 86400, //Is this working?
+                maxAge: 60*60*8, //Is this working?
                 path: '/private',
                 path: '/api/appts',
                 httpOnly: true
