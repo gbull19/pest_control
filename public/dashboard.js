@@ -13,7 +13,7 @@ const makeAppointmentCard = (appt) => {
 
 const getAllAppts = () => axios.get('/api/appts')
     .then(({data}) => {
-        let dbObj = {data}
+        let dbObj = {data}.data
         console.log(dbObj);
         allApptsDiv.innerHTML = "";
 
