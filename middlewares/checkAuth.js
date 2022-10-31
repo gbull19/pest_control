@@ -14,9 +14,8 @@ module.exports = {
         jwt.verify(token, ACCESS_TOKEN_SECRET, (err, user) => {
             if(err){
                 return res.status(403).send(alert('Please login again.'));
-            } else {
-                next();
-            }
-        })
+            } 
+        }); 
+        next();
     }
 }
