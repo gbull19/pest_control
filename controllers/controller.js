@@ -2,11 +2,14 @@ require('dotenv').config();
 const bcrypt = require("bcryptjs");
 const salt = bcrypt.genSaltSync(10);
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 const {ACCESS_TOKEN_SECRET} = process.env;
 const atob = require("atob");
 const {Sequelize, OP, QueryTypes} = require("sequelize");
 const appts = require('../public/appts')
 const {renderDisplayCard, makeApptDisplayCard, getPastAppts} = appts
+const path = require('path')
+
 
 const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
     dialect: 'postgres',
@@ -18,7 +21,18 @@ const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
 });
 
 module.exports = {
-    
+    getHTML: (req, res) => {
+        res.sendFile(path.join(__dirname, '../public/index.html' ))
+    },
+
+    getCSS: (req, res) => {
+        res.sendFile(path.join(__dirname, '../public/index.css'))
+    },
+
+    getJS: (req, res) => {
+        res.sendFile(path.join(__dirname, '../public/client.js'))
+    },
+
     getUpcomingAppointments: (req, res) => {
 
     },
@@ -91,8 +105,8 @@ module.exports = {
             );
 
             INSERT INTO users (first_name, last_name, email, password, is_tech)
-            VALUES ('Garrett', 'Bull', 'garrett@bull.com', '$2a$10$S6zbkDxnW97kHuhEng8uZu3DZHrOUsGmtr9edMiNa148p43ePBeou', '1'),
-            ('Tony', 'Stark', 'tony@starkent.com', '$2a$10$n.qwi1yUq65UHeS9Pb6Jq.2k2faZvT5rxD1bK8TeykAHW/9sWYykG', '0');
+            VALUES ('Garrett', 'Bull', 'garrett@bull.com', '$2a$10$S6zbkDxnW97kHuhEng8uZu3DZHrOUsGmtr9edMiNa148p43ePBeou', TRUE),
+            ('Tony', 'Stark', 'tony@starkent.com', '$2a$10$n.qwi1yUq65UHeS9Pb6Jq.2k2faZvT5rxD1bK8TeykAHW/9sWYykG', FALSE);
 
             INSERT INTO user_address (street_address, city, state, user_id)
             VALUES ('123 N 456 W', 'Orem', 'Utah', '1'),

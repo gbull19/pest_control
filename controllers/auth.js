@@ -76,18 +76,23 @@ module.exports = {
                 user_id: user_id
             }
             const token = jwt.sign(user, ACCESS_TOKEN_SECRET, { expiresIn: '1d'});
-            res.cookie('accessToken', token, {httpOnly: true})
-            .status(200).json({message: "Successful login."});
+            res.cookie('accessToken', token, { 
+                maxAge: 86400, //Is this working?
+                path: '/private',
+                httpOnly: true
+            })
+            .status(200)
+            .json({ message: "Successful login." });
         })
         .catch((error) => {
             console.log(error);
-            res.status(403).json({ message: "Error retrieving information"});
+            res.status(403).json({ message: "Error retrieving information" });
         });
     },
 
 
     logout: (req, res) => {
         res.clearCookie('accessToken');
-        return res.status(200).json('Logout successful.').redirect('/login');
+        return res.status(200).json( 'Logout successful.').redirect('/login' );
     }
 }
