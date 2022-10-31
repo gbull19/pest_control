@@ -14,13 +14,13 @@ const makeAppointmentCard = (appt) => {
 const getAllAppts = () => axios.get('/api/appts')
     .then(({data}) => {
         let dbObj = {data}.data
-        console.log(dbObj);
+        console.log(typeof(dbObj));
         allApptsDiv.innerHTML = "";
 
-        dbObj.forEach(apptObj => {
+        for (let apptObj in dbObj) {
             let apptCard = makeAppointmentCard(apptObj)
             allApptsDiv.innerHTML += apptCard
-        })
+        }
     })
     .catch(err => {console.log(err)
         alert("Error loading content")});
