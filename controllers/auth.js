@@ -6,7 +6,7 @@ const atob = require("atob");
 const { Sequelize, OP, QueryTypes } = require("sequelize");
 const { cookie, clearCookie } = require("cookie-parser");
 
-const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
     dialectOptions: {
         ssl: {

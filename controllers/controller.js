@@ -10,8 +10,7 @@ const appts = require('../public/appts')
 const {renderDisplayCard, makeApptDisplayCard, getPastAppts} = ('../public/appts')
 const path = require('path')
 
-
-const sequelize = new Sequelize(process.env.CONNECTION_STRING, {
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
     dialectOptions: {
         ssl: {
