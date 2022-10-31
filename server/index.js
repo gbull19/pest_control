@@ -1,11 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
+const path = require('path')
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 app.use(express.json());
 app.use(cors());
+app.use(express.static('public'));
 app.use(cookieParser());
 
 const PORT = process.env.PORT || 8444

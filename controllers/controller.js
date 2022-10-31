@@ -7,7 +7,7 @@ const {ACCESS_TOKEN_SECRET} = process.env;
 const atob = require("atob");
 const {Sequelize, OP, QueryTypes} = require("sequelize");
 const appts = require('../public/appts')
-const {renderDisplayCard, makeApptDisplayCard, getPastAppts} = appts
+const {renderDisplayCard, makeApptDisplayCard, getPastAppts} = ('../public/appts')
 const path = require('path')
 
 
