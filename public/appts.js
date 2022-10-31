@@ -12,8 +12,6 @@ module.exports = {
 
     makeApptDisplayCard: (appt) => {
         return `
-            <div class="appt-card outline">
-            <img src='${appt.imgAddress}' alt='${appt.name}'/>
             <h3>${appt.name}</h3>
             <h4>Health: ${appt.health}</h4>
             <p>Attack 1: ${appt.attacks[0].damage} damage</p>

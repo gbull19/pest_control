@@ -123,3 +123,4 @@ registerToggle.addEventListener('click', registerToggleHandler);
 
 loginForm.addEventListener('submit', loginSubmitHandler);
 loginToggle.addEventListener('click', loginToggleHandler)
+

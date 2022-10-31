@@ -23,30 +23,41 @@ module.exports = {
     getHTML: (req, res) => {
         res.sendFile(path.join(__dirname, '../public/index.html' ))
     },
-
     getCSS: (req, res) => {
         res.sendFile(path.join(__dirname, '../public/index.css'))
     },
-
     getJS: (req, res) => {
         res.sendFile(path.join(__dirname, '../public/client.js'))
     },
-
+    getDashCSS: (req, res) => {
+        res.sendFile(path.join(__dirname, '../public/dashboard.css'))
+    },
+    getDashJS: (req, res) => {
+        res.sendFile(path.join(__dirname, '../public/dashboard.js'))
+    },
     getUpcomingAppointments: (req, res) => {
-
     },
 
-    getAllAppts: (req, res) => {
-        sequelize.query(`
-            SELECT * 
-            FROM users u
-            JOIN appts a ON u.user_id = '2' AND a.user_id = '2'; 
-        `)
+       // const token = req.cookies.accessToken;
+        // const { user_id } = token;
+        // await sequelize.query(
+        //     `SELECT * FROM users u
+        //         JOIN appts a ON u.user_id = a.user_id
+        //         WHERE u.user_id = '${user_id}'`,
+        //     {
+        //         replacements: [user_id],
+        //         type: QueryTypes.INSERT
+        //     }
+        // )
+    getAllAppts: async (req, res) => {
+        await sequelize.query(
+            `SELECT * FROM user_address ua
+                JOIN appts a ON ua.user_id = '2' AND aa.user_id = '2'`
+        )
         .then(dbres => {
             let [dbObj] = dbres;
             console.log(dbObj);
-            dbObj = delete dbObj.password
-            res.status(200).json({ dbObj})
+            res.status(200).json({ dbObj });
         })
         .catch((error) => {
             console.log(error);

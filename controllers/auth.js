@@ -79,6 +79,7 @@ module.exports = {
             res.cookie('accessToken', token, { 
                 maxAge: 86400, //Is this working?
                 path: '/private',
+                path: '/api/appts',
                 httpOnly: true
             })
             .status(200)

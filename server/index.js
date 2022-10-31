@@ -12,10 +12,12 @@ app.use(cookieParser());
 
 const PORT = process.env.PORT || 8444
 
-const {getHTML, getCSS, getJS} = require('../controllers/controller.js')
+const {getHTML, getCSS, getJS, getDashCSS, getDashJS} = require('../controllers/controller.js')
 app.get('/', getHTML)
 app.get('/css', getCSS)
 app.get('/js', getJS)
+app.get('/dashCSS', getDashCSS)
+app.get('/dashJS', getDashJS)
 
 const { privateRoutes } = require('./private.js');
 const { register, login, logout } = require("../controllers/auth.js");
@@ -24,7 +26,7 @@ const { checkAuth } = require('../middlewares/checkAuth.js')
 
 app.use('/private', checkAuth, privateRoutes);
 // app.get('/upcoming', getUpcomingAppointments);
-// app.get('/appt', getPastAppointments);
+app.get('/api/appts', getAllAppts);
 app.get('/api/getallappts', getAllAppts);
 app.get('/logout', logout);
 app.post('/api/login', login);

@@ -5,10 +5,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pest Control Dashboard</title>
-        <link rel="stylesheet" href="/css">
+        <link rel="stylesheet" href="/dashCSS">
         <link rel="stylesheet" href="dashboard.css">
     </head>
     <body>
+
         <div class="header_container">
             <img class="header_logo" src="https://github.com/gbull19/pest_control/blob/main/images/nobull_logo-720w.webp?raw=true" alt="No Bull Pest Control Logo" />
             <div class="navbar">
@@ -19,11 +20,15 @@
                 </nav>
             </div>
         </div>
+
         <div>
            <h1>User Dashboard</h1>
         </div>
+
+        <div id="all_appts"></div>
+
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="/js"></script>
-        <script src="client.js"></script>
+        <script src="/dashJS"></script>
+        <script src="dashboard.js"></script>
     </body>
 </html>
