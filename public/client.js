@@ -96,8 +96,8 @@ const loginToggleHandler = e => {
 const login = (body) => axios.post('/api/login', body)
 .then(res => {
   alert("Login successful!");
-  location.assign('/dashboard.html')
-  // location.assign('/private'); // authentication route is throwing an error
+  // location.assign('/dashboard.html') // will work by bypassing authentication
+  location.assign('/private'); // authentication route is throwing an error
 }).catch(err => {console.log(err)
   alert('Invalid credentials. Please try again.')
 })
