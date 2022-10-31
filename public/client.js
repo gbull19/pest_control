@@ -96,9 +96,8 @@ const loginToggleHandler = e => {
 const login = (body) => axios.post('/api/login', body)
 .then(res => {
   alert("Login successful!");
-  // location.assign('/dashboard.html');
-  location.assign('/private');
-  // window.location.replace("/private");
+  location.assign('/dashboard.html')
+  // location.assign('/private');
 }).catch(err => {console.log(err)
   alert('Invalid credentials. Please try again.')
 })
