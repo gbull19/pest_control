@@ -13,10 +13,11 @@ const makeAppointmentCard = (appt) => {
 
 const getAllAppts = () => axios.get('/api/appts')
     .then(({data}) => {
-        console.log(data);
+        let dbObj = {data}
+        console.log(dbObj);
         allApptsDiv.innerHTML = "";
 
-        Object.entries(data).forEach(apptObj => {
+        dbObj.forEach(apptObj => {
             let apptCard = makeAppointmentCard(apptObj)
             allApptsDiv.innerHTML += apptCard
         })
