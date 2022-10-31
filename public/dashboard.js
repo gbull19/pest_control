@@ -16,7 +16,7 @@ const getAllAppts = () => axios.get('/api/appts')
         console.log(data);
         allApptsDiv.innerHTML = "";
 
-        data.forEach(apptObj => {
+        Object.entries(data).forEach(apptObj => {
             let apptCard = makeAppointmentCard(apptObj)
             allApptsDiv.innerHTML += apptCard
         })
