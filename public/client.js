@@ -8,7 +8,7 @@ const loginDiv = document.getElementById("loginDiv");
 
 
 //register functions
-const register = body => axios.post('http://localhost:8444/api/register', body)
+const register = body => axios.post('/api/register', body)
   .then(res => {
     alert("Account registered successfully!");
     registerForm.reset();
@@ -93,12 +93,12 @@ const loginToggleHandler = e => {
 
 
 //login
-const login = (body) => axios.post('http://localhost:8444/api/login', body)
+const login = (body) => axios.post('/api/login', body)
 .then(res => {
   alert("Login successful!");
-  // location.assign('http://localhost:5500/Pest_control/public/dashboard.html');
-  location.assign('http://localhost:8444/private');
-  // window.location.replace("http://localhost:8444/private");
+  // location.assign('/dashboard.html');
+  location.assign('/private');
+  // window.location.replace("/private");
 }).catch(err => {console.log(err)
   alert('Invalid credentials. Please try again.')
 })
