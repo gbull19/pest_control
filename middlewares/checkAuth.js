@@ -9,13 +9,14 @@ module.exports = {
         if(!token) {
             return res.status(401).json('Please login again.');
         }
-        console.log("JWT verification")
+        console.log("JWT verification");
         jwt.verify(token, ACCESS_TOKEN_SECRET, (err, user) => {
             if(err){
                 return res.status(403).send(alert('Token not verified.'));
+            } else {
+                location.assign("/dashboard.html");
             } 
         }); 
-        next();
     }
 }
 
