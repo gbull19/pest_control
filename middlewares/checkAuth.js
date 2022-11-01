@@ -4,16 +4,16 @@ const {ACCESS_TOKEN_SECRET} = process.env;
 
 module.exports = {
     checkAuth: (req, res, next) => {
-        console.log("req.body", req.body)
+        console.log("req.body", req)
         const token = req.body;
         if(!token) {
             console.log("No cookie found", req)
-            return res.status(401).json('Please login again.');
+            return res.status(401).json({message: 'Please login again.'});
         }
         console.log("JWT verification")
         jwt.verify(token, ACCESS_TOKEN_SECRET, (err, user) => {
             if(err){
-                return res.status(403).send(alert('Please login again.'));
+                return res.status(403).json({ message: 'Please login again.'});
             } 
         }); 
         next();
