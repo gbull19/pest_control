@@ -7,9 +7,8 @@ module.exports = {
         const token = sessionStorage.getItem("accessToken");
         console.log(token)
         if(!token) {
-            return res.status(401).json('Please login again.');
+            return res.status(401).json('No token present.');
         }
-        console.log("JWT verification");
         jwt.verify(token, ACCESS_TOKEN_SECRET, (err, user) => {
             if(err){
                 return res.status(403).send(alert('Token not verified.'));
