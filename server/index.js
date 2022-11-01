@@ -16,7 +16,7 @@ const {getHTML, getCSS, getJS, getDashCSS, getDashJS, getMyAccountJS} = require(
 app.get('/', getHTML)
 app.get('/css', getCSS)
 app.get('/js', getJS)
-app.get('/myaccountjs', getMyAccountJS)
+app.get('/myaccountJS', getMyAccountJS)
 app.get('/dashCSS', getDashCSS)
 app.get('/dashJS', getDashJS)
 
