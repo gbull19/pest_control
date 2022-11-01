@@ -1,7 +1,7 @@
 const allApptsDiv = document.querySelector('#all_appts');
 const userWelcome = document.querySelector('#user_welcome');
 
-const token = sessionStorage.getItem("accessToken");
+// const token = sessionStorage.getItem("accessToken");
 
 const makeAppointmentCard = (appt) => {
     const { appt_date, interior, appt_price, street_address, city, state} = appt;
@@ -18,10 +18,10 @@ const makeAppointmentCard = (appt) => {
 }
 
 const getAllAppts = () => {
-    if (!token) {
-        allApptsDiv.innerHTML = "";
-        allApptsDiv.innerHTML += "Please login before accessing your dashboard."
-    } else {
+    // if (!token) {
+    //     allApptsDiv.innerHTML = "";
+    //     allApptsDiv.innerHTML += "Please login before accessing your dashboard."
+    // } else {
         axios.get('/api/appts')
             .then(({data}) => {
                 console.log(data)
@@ -35,7 +35,6 @@ const getAllAppts = () => {
                 console.log(err);
                 alert("Error loading content");
             });
-    }
 }
 
 // axios.get('/api/appts')

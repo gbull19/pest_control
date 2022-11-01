@@ -24,7 +24,10 @@ module.exports = {
         res.sendFile(path.join(__dirname, '../public/index.css'))
     },
     getJS: (req, res) => {
-        res.sendFile(path.join(__dirname, '../public/client.js'))
+        res.sendFile(path.join(__dirname, '../public/index.js'))
+    },
+    getMyAccountJS: (req, res) => {
+        res.sendFile(path.join(__dirname, '../public/myaccount.js'))
     },
     getDashCSS: (req, res) => {
         res.sendFile(path.join(__dirname, '../public/dashboard.css'))

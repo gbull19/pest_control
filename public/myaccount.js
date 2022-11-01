@@ -93,8 +93,6 @@ const loginToggleHandler = e => {
 
 
 
-
-
 //login
 const login = (body) => axios.post('/api/login', body)
   .then(res => {
