@@ -61,6 +61,7 @@ module.exports = {
             }
             );
         hashPassword = hashPassword[0][0].password;
+        console.log("hash", hashPassword)
         const authenticated = bcrypt.compare(password, hashPassword);
             if(!authenticated) { 
                 res.status(401).json({message: "Email and Password do not match. Please try again."})
@@ -74,9 +75,10 @@ module.exports = {
                     replacements: [email],
                     type: QueryTypes.INSERT
                 }
-                )
+            )
         .then(dbres => {
             let [[dbObj]] = dbres;
+            console.log("dbres", dbres)
             const {email, user_id, first_name} = dbObj;
             let user = {
                 email: email,
@@ -86,7 +88,7 @@ module.exports = {
             const token = jwt.sign(user, ACCESS_TOKEN_SECRET);
             // , {expireIn: '1d'});
             res.cookie('accessToken', `'${token}'`, { maxAge: 60*60*8 });
-            res.status(200).json({ message: "Successful login.", accessToken});
+            res.status(200).json({ message: "Successful login.", token: `${token}`});
         })
         .catch((error) => {
             console.log(error);
