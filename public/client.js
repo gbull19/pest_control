@@ -96,6 +96,8 @@ const loginToggleHandler = e => {
 const login = (body) => axios.post('/api/login', body)
 .then(res => {
   alert("Login successful!");
+  console.log(res.body.token)
+  sessionStorage.setItem('accessToken', res.body.token);
   // location.assign('/dashboard.html') // will work by bypassing authentication
   location.assign('/private'); // authentication route is throwing an error
 }).catch(err => {console.log(err)

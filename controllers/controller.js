@@ -49,14 +49,19 @@ module.exports = {
         //         type: QueryTypes.INSERT
         //     }
         // )
+        
     getAllAppts: (req, res) => {
         console.log("Get request received")
         sequelize.query(
-            `SELECT * FROM user_address ua
-                JOIN appts a ON ua.user_id = '2' AND a.user_id = '2'`
+            `SELECT u.first_name, ua.street_address, ua.city, ua.state, a.appt_date, a.interior, a.appt_price, ap.pest_01 FROM users u
+                JOIN user_address ua ON ua.user_id = u.user_id
+                JOIN appts a ON a.user_id = u.user_id
+                JOIN appt_pests ap ON ap.appt_id = a.appt_id
+            WHERE u.user_id = '2';`
         )
         .then(dbres => {
             let [dbObj] = dbres;
+            console.log(dbObj)
             res.status(200).json({ dbObj });
         })
         .catch((error) => {

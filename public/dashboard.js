@@ -1,33 +1,61 @@
 const allApptsDiv = document.querySelector('#all_appts');
 const userWelcome = document.querySelector('#user_welcome');
 
+const token = sessionStorage.getItem("accessToken");
+
 const makeAppointmentCard = (appt) => {
     const { appt_date, interior, appt_price, street_address, city, state} = appt;
     let interiorService = ""
     if (interior == true) { interiorService = "Yes" } else { interiorService = "No" }
-    return `
-        <div class="appt-card-border">
+    return (`<div class="appt-card-border">
             <div class="appt-card">
                 <h2>${appt_date}</h2>
                 <h3>${street_address}, ${city}, ${state}</h3>
                 <P>Price: ${appt_price}</P>
                 <p>Was Interior Treated?: ${interiorService}</p>
             </div>
-        </div>`
+        </div>`)
 }
 
-const getAllAppts = () => axios.get('/api/appts')
-    .then(({data}) => {
+const getAllAppts = () => {
+    if (!token) {
         allApptsDiv.innerHTML = "";
-        data.forEach(obj => {
-            let apptCard = makeAppointmentCard(obj)
-            allApptsDiv.innerHTML += apptCard
-        })
-    })
-    .catch(err => {console.log(err)
-        alert("Error loading content")});
+        allApptsDiv.innerHTML += "Please login before accessing your dashboard."
+    } else {
+        axios.get('/api/appts')
+            .then(({data}) => {
+                console.log(data)
+                allApptsDiv.innerHTML = "";
+                data.forEach(obj => {
+                    let apptCard = makeAppointmentCard(obj)
+                    allApptsDiv.innerHTML += apptCard
+                })
+            })
+            .catch((err) => {
+                console.log(err);
+                alert("Error loading content");
+            });
+    }
+}
 
-getAllAppts()
+// axios.get('/api/appts')
+//     .then(({data}) => {
+//             console.log(data)
+//             allApptsDiv.innerHTML = "";
+//             data.forEach(obj => {
+//                 let apptCard = makeAppointmentCard(obj)
+//                 allApptsDiv.innerHTML += apptCard
+//             })
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//         alert("Error loading content");
+//     });
+
+// getAllAppts()
+
+
+
 
 // let dbObj = [
 //     {
