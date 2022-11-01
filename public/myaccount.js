@@ -92,13 +92,23 @@ const loginToggleHandler = e => {
 };
 
 
+//dashboard load
+const dashLoad = (body) => axios.get('/private', body)
+  .then(res => {
+      console.log("Private route verified");
+      location.assign("/dashboard.html");
+   })
+  .catch(err => {console.log(err)
+      alert("Couldn't load dashboard. Please try again.");
+  }) 
+
 
 //login
 const login = (body) => axios.post('/api/login', body)
   .then(res => {
-      console.log(res)
       alert("Login successful!");
-      // location.assign('/private'); // auth route is throwing an error
+      let token = res.data.token;
+      dashLoad(token);
   })
   .catch(err => {console.log(err)
       alert('Invalid credentials. Please try again.')
