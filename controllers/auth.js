@@ -20,6 +20,14 @@ module.exports = {
     register: async (req, res) => {
         const {first_name, last_name, email, street_address, city, state, is_tech, password} = req.body;
         const hashPassword = bcrypt.hashSync(password, salt);
+        let [[user]] = await sequelize.query(`
+            SELECT email FROM users
+            WHERE email = ?;
+        `, {
+            replacements: [email],
+            type: QueryTypes.INSERT
+        });
+        if (user) {return (alert('User already exists'))};
         await sequelize.query(
             `WITH ins AS (
                 INSERT INTO users (first_name, last_name, email, password, is_tech)
@@ -76,15 +84,14 @@ module.exports = {
                 user_id: user_id,
                 first_name: first_name
             }
-            const token = jwt.sign(user, ACCESS_TOKEN_SECRET);
-            // , { expiresIn: '1d'}
+            const token = jwt.sign(user, ACCESS_TOKEN_SECRET, {expireIn: '1d'});
             // res.cookie('accessToken', token, { 
             //     maxAge: 60*60*8, //Is this working?
             //     path: '/private',
             //     path: '/api/appts',
             //     httpOnly: true
             // })
-            res.status(200).json({ message: "Successful login.", token: token});
+            res.status(200).send({ message: "Successful login.", token});
         })
         .catch((error) => {
             console.log(error);
@@ -96,5 +103,13 @@ module.exports = {
     logout: (req, res) => {
         res.clearCookie('accessToken');
         return res.status(200).json( 'Logout successful.').redirect('/login' );
+    },
+
+    requireUser: (req, res, next) => {
+        if (!req.user) {
+            return res.status(401).json({message: "You must be logged in"});
+            // next();
+        }
+        next();
     }
 }
