@@ -24,8 +24,8 @@ const { register, login, logout, requireUser } = require("../controllers/auth.js
 const { getAllAppts, seed } = require('../controllers/controller.js');
 const { checkAuth } = require('../middlewares/checkAuth.js')
 
-app.use('/private', requireUser, checkAuth);
 // app.get('/upcoming', getUpcomingAppointments);
+app.use('/private', checkAuth, privateRoutes);
 app.get('/api/appts', getAllAppts);
 app.get('/logout', logout);
 app.post('/api/login', login);

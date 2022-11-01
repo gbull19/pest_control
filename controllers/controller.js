@@ -2,12 +2,9 @@ require('dotenv').config();
 const bcrypt = require("bcryptjs");
 const salt = bcrypt.genSaltSync(10);
 const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
+const { cookie, clearCookie } = require("cookie-parser");
 const {ACCESS_TOKEN_SECRET} = process.env;
-const atob = require("atob");
 const {Sequelize, OP, QueryTypes} = require("sequelize");
-const appts = require('../public/appts')
-const {renderDisplayCard, makeApptDisplayCard, getPastAppts} = ('../public/appts')
 const path = require('path')
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {

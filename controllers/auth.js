@@ -2,7 +2,6 @@ const bcrypt = require("bcryptjs");
 const salt = bcrypt.genSaltSync(10);
 const jwt = require('jsonwebtoken');
 const { ACCESS_TOKEN_SECRET } = process.env;
-const atob = require("atob");
 const { Sequelize, OP, QueryTypes } = require("sequelize");
 const { cookie, clearCookie } = require("cookie-parser");
 
@@ -84,14 +83,10 @@ module.exports = {
                 user_id: user_id,
                 first_name: first_name
             }
-            const token = jwt.sign(user, ACCESS_TOKEN_SECRET, {expireIn: '1d'});
-            // res.cookie('accessToken', token, { 
-            //     maxAge: 60*60*8, //Is this working?
-            //     path: '/private',
-            //     path: '/api/appts',
-            //     httpOnly: true
-            // })
-            res.status(200).send({ message: "Successful login.", token});
+            const token = jwt.sign(user, ACCESS_TOKEN_SECRET);
+            // , {expireIn: '1d'});
+            res.cookie('accessToken', `'${token}'`, { maxAge: 60*60*8 });
+            res.status(200).json({ message: "Successful login.", accessToken});
         })
         .catch((error) => {
             console.log(error);
