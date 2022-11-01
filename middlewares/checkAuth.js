@@ -4,8 +4,9 @@ const {ACCESS_TOKEN_SECRET} = process.env;
 
 module.exports = {
     checkAuth: (req, res, next) => {
-        console.log("req.headers.cookie", req.headers.cookie.accessToken)
-        const token = req.headers.cookie.accessToken;
+        let token = req.headers.cookie;
+        token = token.split("=")[1]
+        console.log(token)
         if(!token) {
             console.log("No cookie found", req)
             return res.status(401).json({message: 'Please login again.'});
