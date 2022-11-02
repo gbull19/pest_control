@@ -21,7 +21,7 @@ app.get('/dashCSS', getDashCSS)
 app.get('/dashJS', getDashJS)
 
 const { privateRoutes } = require('./private.js');
-const { register, login, logout, requireUser } = require("../controllers/auth.js");
+const { register, login, logout } = require("../controllers/auth.js");
 const { getAllAppts, newApptRequest, newContactForm, seed } = require('../controllers/controller.js');
 const { checkAuth } = require('../middlewares/checkAuth.js')
 

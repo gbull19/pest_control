@@ -3,6 +3,7 @@ const contactForm = document.getElementById('contact_form');
 const contactFormSubmit = obj => axios.post('/api/contact', obj)
     .then(res => {
         alert('Message received. We will contact you shortly.');
+        contactForm.requestFullscreen();
     })
     .catch(err => {console.log(err)
         alert('Uh oh. Your message wasn\'t received. Please try again.');
@@ -25,7 +26,6 @@ const contactFormHandler = e => {
         message: message.value
     }
 
-    console.log('contactOBJ = ', contactObj)
     contactFormSubmit(contactObj);
 }
 

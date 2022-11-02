@@ -38,10 +38,10 @@ module.exports = {
     getUpcomingAppointments: (req, res) => {
     },
 
-    newContactForm: async (req, res) => {
+    newContactForm: (req, res) => {
         const { first_name, last_name, phone, email, message } = req.body;
         console.log("req.body = ", req.body);
-        await sequelize.query(`
+        sequelize.query(`
             INSERT INTO message (first_name, last_name, phone, email, message)
             VALUES (?, ?, ?, ?, ?);`,
             {

@@ -15,7 +15,7 @@ const register = body => axios.post('/api/register', body)
   })
   .catch(err => {console.log(err)
     alert('Uh oh. Your request did not work.')
-  })
+  });
 
 const registerSubmitHandler= event => {
   event.preventDefault();
