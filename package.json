@@ -17,7 +17,7 @@
   "name": "pest_control",
   "version": "1.0.0",
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "main": "index.js",
   "scripts": {
