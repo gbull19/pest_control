@@ -57,7 +57,6 @@ const newApptHandler = e => {
         first_name: first_name.value,
         pest_name: pest_name.value
     }
-    console.log("reqObj = ", reqObj);
 
     newAppt(reqObj);
 }
