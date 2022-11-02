@@ -104,7 +104,7 @@ module.exports = {
 
         let base64Url = token.split('.')[1];
         let base64 = base64Url.replace('-', '+').replace('_', '/');
-        token = JSON.parse($window.atob(base64));
+        token = JSON.parse(Window.atob(base64));
         console.log("Parsed token = ", token)
 
         const { user_id } = token;
