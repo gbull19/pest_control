@@ -302,6 +302,7 @@ h1 {
     font-family: Helvetica Light;
     font-size: 15px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .signup_button {
