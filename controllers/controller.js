@@ -41,12 +41,12 @@ module.exports = {
     newApptRequest: async (req, res) => {
         const { first_name, pest_name } = req.body;
         console.log('req.body = ', req.body)
-        const userAddressID = await sequelize.query(`
+        const [[userAddressID]] = await sequelize.query(`
             SELECT user_address_id FROM user_address
             WHERE user_id = 2;
         `)
         console.log("userAddressID = ", userAddressID)
-        const pestID = await sequelize.query(`
+        const [[pestID]] = await sequelize.query(`
             SELECT pest_id FROM pests
             WHERE pest_name = ?`,
             {
