@@ -103,11 +103,8 @@ module.exports = {
         // add token verification to load the dashboard page, else log message "Please login before viewing dashbaord"
 
         let base64Url = token.split('.')[1];
-        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        let jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-        token = JSON.parse(jsonPayload);
+        let base64 = base64Url.replace('-', '+').replace('_', '/');
+        token = JSON.parse($window.atob(base64));
         console.log("Parsed token = ", token)
 
         const { user_id } = token;
