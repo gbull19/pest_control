@@ -1,4 +1,4 @@
-const logout = require('../controllers/auth.js');
+const logout = require('../controllers/auth');
 
 const allApptsDiv = document.getElementById('all_appts');
 const userWelcome = document.getElementById('user_welcome');
