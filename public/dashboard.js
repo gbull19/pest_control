@@ -15,7 +15,7 @@ const makeAppointmentCard = (appt) => {
                 <p>Was Interior Treated?: ${interiorService}</p>
             </div>
         </div>`)
-}
+};
 
 const getAllAppts = () => {
     // if (!token) {
@@ -23,10 +23,10 @@ const getAllAppts = () => {
     //     allApptsDiv.innerHTML += "Please login before accessing your dashboard."
     // } else {
         axios.get('/api/appts')
-            .then(({data}) => {
-                console.log(data)
+            .then(({dbObj}) => {
+                console.log(dbObj)
                 allApptsDiv.innerHTML = "";
-                data.forEach(obj => {
+                dbObj.forEach(obj => {
                     let apptCard = makeAppointmentCard(obj)
                     allApptsDiv.innerHTML += apptCard
                 })
@@ -37,23 +37,7 @@ const getAllAppts = () => {
             });
 }
 
-// axios.get('/api/appts')
-//     .then(({data}) => {
-//             console.log(data)
-//             allApptsDiv.innerHTML = "";
-//             data.forEach(obj => {
-//                 let apptCard = makeAppointmentCard(obj)
-//                 allApptsDiv.innerHTML += apptCard
-//             })
-//     })
-//     .catch((err) => {
-//         console.log(err);
-//         alert("Error loading content");
-//     });
-
-// getAllAppts()
-
-
+getAllAppts();
 
 
 // let dbObj = [

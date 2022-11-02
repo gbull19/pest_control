@@ -6,12 +6,9 @@ module.exports = {
     checkAuth: (req, res, next) => {
         let token = req.headers.cookie;
         token = token.split("=")[1].replace(/['"]+/g, '')
-        console.log(token)
         if(!token) {
-            console.log("No cookie found", req)
             return res.status(401).json({message: 'Please login again.'});
         }
-        console.log("JWT verification")
         jwt.verify(token, ACCESS_TOKEN_SECRET, (err, user) => {
             if(err){
                 return res.status(403).json({ message: 'Please login again.'});
