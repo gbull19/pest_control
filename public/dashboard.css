@@ -87,10 +87,12 @@ h1 {
 .button_div {
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
 }
 
 .new_appt_btn {
     width: 20%;
+    min-width: 200px;
     margin-bottom: 0px;
     height: 40px;
     border: 2px solid #ccc;

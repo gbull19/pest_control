@@ -29,7 +29,7 @@ const { checkAuth } = require('../middlewares/checkAuth.js')
 // app.get('/upcoming', getUpcomingAppointments);
 app.get('/private', checkAuth, privateRoutes);
 app.get('/api/appts', getAllAppts);
-app.get('/logout', logout);
+app.get('/api/logout', logout);
 app.post('/api/contact', newContactForm)
 app.post('/api/apptrequest', newApptRequest);
 app.post('/api/login', login);

@@ -115,7 +115,6 @@ const dashLoad = () => axios.get('/private')
 const login = (body) => axios.post('/api/login', body)
   .then(res => {
       alert("Login successful!");
-      // let token = res.data.token;
       dashLoad();
   })
   .catch(err => {console.log(err)

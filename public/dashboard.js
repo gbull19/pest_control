@@ -1,5 +1,3 @@
-const logout = require('../controllers/auth');
-
 const allApptsDiv = document.getElementById('all_appts');
 const userWelcome = document.getElementById('user_welcome');
 const apptBtn = document.getElementById('appt_btn');
@@ -25,7 +23,6 @@ const makeAppointmentCard = (appt) => {
 const getAllAppts = () => {
     axios.get('/api/appts')
         .then((res) => {
-            console.log("res.data = ", res.data);
             let dbObj = res.data.dbObj
             allApptsDiv.innerHTML = "";
             dbObj.forEach(obj => {
@@ -74,6 +71,18 @@ const newApptToggle = (e) => {
         newApptDiv.classList.add("active");
     }
 };
+
+const logout = () => {
+    axios.get('/api/logout')
+        .then((res) => {
+           alert("Logout successful.")
+           location.assign("/myaccount.html");
+        })        
+        .catch((err) => {
+            console.log(err);
+            alert("Error loggin out. Please try again.");
+        });
+}
 
 apptBtn.addEventListener('click', newApptToggle);
 newApptForm.addEventListener('submit', newApptHandler);

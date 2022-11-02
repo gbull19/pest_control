@@ -95,7 +95,7 @@ module.exports = {
 
     logout: (req, res) => {
         res.clearCookie('accessToken');
-        return res.status(200).json( 'Logout successful.').redirect('/login' );
+        return res.status(200).json( 'Logout successful.');
     },
 
     requireUser: (req, res, next) => {
