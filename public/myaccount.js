@@ -8,11 +8,16 @@ const loginDiv = document.getElementById("loginDiv");
 
 
 //register functions
+const regToggle = () => {
+  registerDiv.classList.remove("active");
+  loginDiv.classList.add("active");
+};
+
 const register = body => axios.post('/api/register', body)
   .then(res => {
     alert("Account registered successfully!");
     registerForm.reset();
-    registerToggleHandler();
+    regToggle();
   })
   .catch(err => {console.log(err)
     alert('Uh oh. Your request did not work.')
