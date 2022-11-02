@@ -1,11 +1,11 @@
 const allApptsDiv = document.getElementById('all_appts');
 const userWelcome = document.getElementById('user_welcome');
 const apptBtn = document.getElementById('appt_btn');
-const newApptDiv = document.querySelector('new_appt');
+const newApptDiv = document.getElementById('new_appt_div');
 const newApptForm = document.getElementById('new_appt_form');
 
 const makeAppointmentCard = (appt) => {
-    const { appt_date, interior, appt_price, street_address, city, state} = appt;
+    const { appt_date, interior, appt_price, street_address, city, state, pest_name} = appt;
     let interiorService = ""
     if (interior == true) { interiorService = "Yes" } else { interiorService = "No" }
     return (`<div class="appt-card-border">
@@ -14,6 +14,7 @@ const makeAppointmentCard = (appt) => {
                 <h3>${street_address}, ${city}, ${state}</h3>
                 <P>Price: ${appt_price}</P>
                 <p>Was Interior Treated?: ${interiorService}</p>
+                <p>What was the target pest? ${pest_name}</p>
             </div>
         </div>`)
 };
@@ -63,7 +64,7 @@ const newApptHandler = e => {
 
 const newApptToggle = (e) => {
     e.preventDefault()
-    
+
     if (newApptDiv.classList.contains("active")) {
         newApptDiv.classList.remove("active");
     } else {

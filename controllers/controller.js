@@ -71,10 +71,12 @@ module.exports = {
         
     getAllAppts: (req, res) => {
         sequelize.query(
-            `SELECT u.first_name, ua.street_address, ua.city, ua.state, a.appt_date, a.interior, a.appt_price, ap.pest_01 FROM users u
+            `SELECT u.first_name, ua.street_address, ua.city, ua.state, a.appt_date, a.interior, a.appt_price, p.pest_name
+            FROM users u
                 JOIN user_address ua ON ua.user_id = u.user_id
                 JOIN appts a ON a.user_id = u.user_id
                 JOIN appt_pests ap ON ap.appt_id = a.appt_id
+                JOIN pests p ON p.pest_id = ap.pest_id
             WHERE u.user_id = '2';`
         )
         .then(dbres => {
