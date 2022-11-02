@@ -191,7 +191,7 @@ module.exports = {
                 message_id SERIAL,
                 first_name VARCHAR(40) NOT NULL,
                 last_name VARCHAR(40) NOT NULL,
-                phone INTEGER NOT NULL,
+                phone VARCHAR(10) NOT NULL,
                 email VARCHAR(75) NOT NULL,
                 message VARCHAR(800) NOT NULL,
                 PRIMARY KEY (message_id)
