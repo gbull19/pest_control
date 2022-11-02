@@ -97,6 +97,7 @@ module.exports = {
     },
         
     getAllAppts: (req, res) => {
+        console.log("getAllAppts header = ", req.headers.cookie)
         sequelize.query(
             `SELECT u.first_name, ua.street_address, ua.city, ua.state, a.appt_date, a.interior, a.appt_price, p.pest_name
             FROM users u
