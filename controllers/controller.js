@@ -40,15 +40,17 @@ module.exports = {
 
     newContactForm: async (req, res) => {
         const { first_name, last_name, phone, email, message } = req.body;
+        console.log("req.body = ", req.body);
         await sequelize.query(`
             INSERT INTO message (first_name, last_name, phone, email, message)
             VALUES (?, ?, ?, ?, ?);`,
-        {
-            replacements: [first_name, last_name, phone, email, message],
-            type: QueryTypes.INSERT
-        }
+            {
+                replacements: [first_name, last_name, phone, email, message],
+                type: QueryTypes.INSERT
+            }
         )
         .then(dbRes => {
+            console.log("deRes successful");
             res.status(200).json({ message: 'Message received' });
         })
         .catch(err => {

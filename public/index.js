@@ -1,14 +1,12 @@
 const contactForm = document.getElementById('contact_form');
 
-const contactFormSubmit = (obj) => {
-    axios.post('/api/contact', obj)
-    .then(
-        alert('Message received. We will contact you shortly.')
-    )
-    .catch(err => {console.log(err)
-        alert('Uh oh. Your message wasn\'t received. Please try again.')
+const contactFormSubmit = obj => axios.post('/api/contact', obj)
+    .then(res => {
+        alert('Message received. We will contact you shortly.');
     })
-}
+    .catch(err => {console.log(err)
+        alert('Uh oh. Your message wasn\'t received. Please try again.');
+    });
 
 const contactFormHandler = e => {
     e.preventDefault();
@@ -27,6 +25,7 @@ const contactFormHandler = e => {
         message: message.value
     }
 
+    console.log('contactOBJ = ', contactObj)
     contactFormSubmit(contactObj);
 }
 
