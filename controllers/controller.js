@@ -101,15 +101,11 @@ module.exports = {
         let token = req.headers.cookie;
         token = token.split("=")[1].replace(/['"]+/g, '');
         // add token verification to load the dashboard page, else log message "Please login before viewing dashbaord"
-        
-        token = jwt.verify(token, ACCESS_TOKEN_SECRET)
-        // let base64Url = token.split('.')[1];
-        // let base64 = base64Url.replace('-', '+').replace('_', '/');
-        // token = JSON.parse(window.atob(base64));
-        console.log("Parsed token = ", token)
-        const { user_id } = token;
-        console.log("user_id = ", user_id);
-
+        let authenticated = jwt.verify(token, ACCESS_TOKEN_SECRET);
+        if (!authenticated) {
+            return res.status(401).json({ message: "Please login before accessing the dashboard"});
+        }
+        const { user_id } = authenticated;
         sequelize.query(
             `SELECT u.first_name, ua.street_address, ua.city, ua.state, a.appt_date, a.interior, a.appt_price, p.pest_name
             FROM users u
@@ -117,7 +113,7 @@ module.exports = {
                 JOIN appts a ON a.user_id = u.user_id
                 JOIN appt_pests ap ON ap.appt_id = a.appt_id
                 JOIN pests p ON p.pest_id = ap.pest_id
-            WHERE u.user_id = '2';`
+            WHERE u.user_id = '${user_id}';`
         )
         .then(dbres => {
             let [dbObj] = dbres;

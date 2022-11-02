@@ -22,6 +22,7 @@ const makeAppointmentCard = (appt) => {
 const getAllAppts = () => {
     axios.get('/api/appts')
         .then((res) => {
+            console.log("res.headers = ", res.headers);
             let dbObj = res.data.dbObj
             allApptsDiv.innerHTML = "";
             dbObj.forEach(obj => {
