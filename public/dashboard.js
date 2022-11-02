@@ -23,7 +23,6 @@ const getAllAppts = () => {
     axios.get('/api/appts')
         .then((res) => {
             let dbObj = res.data.dbObj
-            console.log(dbObj)
             allApptsDiv.innerHTML = "";
             dbObj.forEach(obj => {
                 let apptCard = makeAppointmentCard(obj)
@@ -55,8 +54,8 @@ const newApptHandler = e => {
     const pest_name = document.getElementById('pest_appt_input');
     
     const reqObj = {
-        first_name: first_name,
-        pest_name: pest_name
+        first_name: first_name.value,
+        pest_name: pest_name.value
     }
     console.log("reqObj = ", reqObj);
 
