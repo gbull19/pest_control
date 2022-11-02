@@ -12,10 +12,11 @@ app.use(cookieParser());
 
 const PORT = process.env.PORT || 8444
 
-const {getHTML, getCSS, getJS, getDashCSS, getDashJS, getMyAccountJS} = require('../controllers/controller.js')
+const {getHTML, getCSS, getJS, getDashCSS, getDashJS, getMyAccountJS, getContactJS } = require('../controllers/controller.js')
 app.get('/', getHTML)
 app.get('/css', getCSS)
 app.get('/js', getJS)
+app.get('/contactJS', getContactJS)
 app.get('/myaccountJS', getMyAccountJS)
 app.get('/dashCSS', getDashCSS)
 app.get('/dashJS', getDashJS)

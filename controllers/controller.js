@@ -35,8 +35,12 @@ module.exports = {
     getDashJS: (req, res) => {
         res.sendFile(path.join(__dirname, '../public/dashboard.js'))
     },
-    getUpcomingAppointments: (req, res) => {
+    getContactJS: (req, res) => {
+        res.sendFile(path.join(__dirname, '../public/contactus.js'))
     },
+
+    // getUpcomingAppointments: (req, res) => {
+    // },
 
     newContactForm: (req, res) => {
         const { first_name, last_name, phone, email, message } = req.body;
