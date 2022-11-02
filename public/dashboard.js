@@ -47,8 +47,8 @@ const newAppt = obj => {
         });
 };
 
-const newApptHandler = event => {
-    event.preventDefault()
+const newApptHandler = e => {
+    e.preventDefault()
 
     const first_name = document.getElementById('first_name');
     const pest_name = document.getElementById('pest_appt_input');
@@ -61,7 +61,9 @@ const newApptHandler = event => {
     newAppt(reqObj);
 }
 
-const newApptToggle = (event) => {
+const newApptToggle = (e) => {
+    e.preventDefault()
+    
     if (newApptDiv.classList.contains("active")) {
         newApptDiv.classList.remove("active");
     } else {
