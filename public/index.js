@@ -1,7 +1,7 @@
 const contactForm = document.getElementById('contact_form');
 
 const contactFormSubmit = (obj) => {
-    axios.post('', obj)
+    axios.post('/api/contact', obj)
     .then(
         alert('Message received. We will contact you shortly.')
     )
