@@ -4,6 +4,7 @@ const app = express();
 
 module.exports = {
     privateRoutes: (req, res) => {
+        console.log('You reached the private route')
         res.status(200).json("You got the private route");
     }
 }
