@@ -38,6 +38,25 @@ module.exports = {
     getUpcomingAppointments: (req, res) => {
     },
 
+    newContactForm: async (req, res) => {
+        const { first_name, last_name, phone, email, message } = req.body;
+        await sequelize.query(`
+            INSERT INTO message (first_name, last_name, phone, email, message)
+            VALUES (?, ?, ?, ?, ?);`,
+        {
+            replacements: [first_name, last_name, phone, email, message],
+            type: QueryTypes.INSERT
+        }
+        )
+        .then(dbRes => {
+            res.status(200).json({ message: 'Message received' });
+        })
+        .catch(err => {
+            console.log(error);
+            res.status(401).json({ message: 'Error recording message' });
+        })
+    },
+
     newApptRequest: async (req, res) => {
         const { first_name, pest_name } = req.body;
         let [[userAddressID]] = await sequelize.query(`
@@ -47,7 +66,7 @@ module.exports = {
         userAddressID = userAddressID.user_address_id;
         let [[pestID]] = await sequelize.query(`
             SELECT pest_id FROM pests
-            WHERE pest_name = ?`,
+            WHERE pest_name = ?;`,
             {
                 replacements: [pest_name],
                 type: QueryTypes.INSERT  
@@ -56,7 +75,7 @@ module.exports = {
         pestID = pestID.pest_id
         await sequelize.query(`
             INSERT INTO requests (first_name, user_id, user_address_id, pest_id)
-                VALUES (?, ?, ?, ?)`,
+                VALUES (?, ?, ?, ?);`,
             {
                 replacements: [first_name, '2', userAddressID, pestID],
                 type: QueryTypes.INSERT
@@ -94,7 +113,10 @@ module.exports = {
 
     seed: (req, res) => {
         sequelize.query(`
+            DROP TABLE IF EXISTS message;
+            DROP TABLE IF EXISTS requests;
             DROP TABLE IF EXISTS appt_pests;
+            DROP TABLE IF EXISTS pests;
             DROP TABLE IF EXISTS appts;
             DROP TABLE IF EXISTS user_address;
             DROP TABLE IF EXISTS users;
@@ -159,6 +181,16 @@ module.exports = {
                 CONSTRAINT fk_pest_id FOREIGN KEY (pest_id) REFERENCES pests(pest_id)
             );
 
+            CREATE TABLE message (
+                message_id SERIAL,
+                first_name VARCHAR(40) NOT NULL,
+                last_name VARCHAR(40) NOT NULL,
+                phone INTEGER NOT NULL,
+                email VARCHAR(75) NOT NULL,
+                message VARCHAR(800) NOT NULL,
+                PRIMARY KEY (message_id)
+            );
+
             INSERT INTO users (first_name, last_name, email, password, is_tech)
             VALUES ('Garrett', 'Bull', 'garrett@bull.com', '$2a$10$S6zbkDxnW97kHuhEng8uZu3DZHrOUsGmtr9edMiNa148p43ePBeou', TRUE),
             ('Tony', 'Stark', 'tony@starkent.com', '$2a$10$n.qwi1yUq65UHeS9Pb6Jq.2k2faZvT5rxD1bK8TeykAHW/9sWYykG', FALSE);
@@ -192,6 +224,9 @@ module.exports = {
 
             INSERT INTO requests (first_name, user_id, user_address_id, pest_id)
             VALUES ('Pepper', '2', '2', '4');
+
+            INSERT INTO message (first_name, last_name, phone, email, message)
+            VALUES ('Scott', 'Lang', '1234567890', 'scott@lang.com', 'I need help getting rid of some spiders. They are huge and I''m afraid they will eat me.');
 
         `).then(() => {
             console.log('DB seeded')

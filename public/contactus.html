@@ -32,13 +32,16 @@
                     <p></p>
 
                     <label>First Name:</label>
-                    <input class="contact_form_input" id="contact_form_first_name" type="text" placeholder="First Name">
+                    <input class="contact_form_input" id="contact_form_first_name" type="text" placeholder="First Name" required/>
                     
                     <label>Last Name:</label>
-                    <input class="contact_form_input" id="contact_form_last_name" type="text" placeholder="Last Name">
+                    <input class="contact_form_input" id="contact_form_last_name" type="text" placeholder="Last Name" required/>
+
+                    <label>Phone Number:</label>
+                    <input class="contact_form_input" id="contact_form_phone" type="tel" pattern="[0-9]{3} [0-9]{3} [0-9]{4}" maxlength="12" placeholder="888 888-8888" required/>
 
                     <label>Email:</label>
-                    <input class="contact_form_input" id="contact_form_email" type="text" placeholder="Email Address">
+                    <input class="contact_form_input" id="contact_form_email" type="email" placeholder="Email Address" required/>
 
                     <label>Message:</label>
                     <textarea class="contact_form_message" id="contact_form_message" rows="3" cols="38">Message</textarea>
