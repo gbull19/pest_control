@@ -58,7 +58,7 @@ module.exports = {
             res.status(200).json({ message: 'Message received' });
         })
         .catch(err => {
-            console.log(error);
+            console.log(err);
             res.status(401).json({ message: 'Error recording message' });
         })
     },

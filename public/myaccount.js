@@ -12,6 +12,7 @@ const register = body => axios.post('/api/register', body)
   .then(res => {
     alert("Account registered successfully!");
     registerForm.reset();
+    registerToggleHandler();
   })
   .catch(err => {console.log(err)
     alert('Uh oh. Your request did not work.')
