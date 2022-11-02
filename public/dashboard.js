@@ -23,7 +23,7 @@ const getAllAppts = () => {
     //     allApptsDiv.innerHTML += "Please login before accessing your dashboard."
     // } else {
         axios.get('/api/appts')
-            .then(({dbObj}) => {
+            .then((dbObj) => {
                 console.log(dbObj)
                 allApptsDiv.innerHTML = "";
                 dbObj.forEach(obj => {
