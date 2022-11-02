@@ -94,6 +94,7 @@ h1 {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
+    margin-top: 30px;
     margin-left: 20px;
     gap: 20px;
 }
@@ -124,7 +125,7 @@ h1 {
 }
 
 .appt-card {
-    width: 225px;
+    width: 250px;
     height: 300px;
     margin: 20px;
     padding-left: 15px;
@@ -135,10 +136,8 @@ h1 {
     border-radius: 15px 15px 0px 0px;
     position: relative;
     background: #ebe9e7;
-    box-shadow: 0 5px 25px 5px rgb(0 0 0);
+    box-shadow: 0 5px 20px 5px rgb(0 0 0);
 }
-
-/* .outline::before */
 
 .new_appt {
     display: none;
@@ -170,28 +169,3 @@ h1 {
     font-family: Helvetica Light;
     font-size: 14px;
 }
-
-/* .login_button {
-    width: 20%;
-    margin-bottom: 0px;
-    height: 40px;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    background: #36578c;
-    color: #ebe9e7;
-    font-family: Helvetica Light;
-    font-size: 15px;
-}
-
-.login_button:hover {
-    width: 20%;
-    margin-bottom: 0px;
-    height: 40px;
-    border: 2px solid #e07400;
-    border-radius: 5px;
-    background: #36578c;
-    color: #ebe9e7;
-    font-family: Helvetica Light;
-    font-size: 16px;
-    font-weight: bold;
-} */

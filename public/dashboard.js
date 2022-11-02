@@ -12,7 +12,7 @@ const makeAppointmentCard = (appt) => {
             <div class="appt-card">
                 <h2>${appt_date}</h2>
                 <h3>${street_address}, ${city}, ${state}</h3>
-                <P>Price: ${appt_price}</P>
+                <P>Price: $${appt_price}</P>
                 <p>Was Interior Treated?: ${interiorService}</p>
                 <p>What was the target pest? ${pest_name}</p>
             </div>
@@ -73,7 +73,7 @@ const newApptToggle = (e) => {
 };
 
 apptBtn.addEventListener('click', newApptToggle);
-newApptForm.addEventListener('click', newApptHandler);
+newApptForm.addEventListener('submit', newApptHandler);
 
 
 getAllAppts();
