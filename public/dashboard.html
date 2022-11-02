@@ -25,6 +25,35 @@
            <h1>User Dashboard</h1>
         </div>
 
+        <div>
+            <button class="new_appt_btn" id="appt_btn">Request Treatment</button>
+
+            <div class="new_appt">
+
+                <form id="new_appt_form">
+                    <img class="form_logo" src="https://github.com/gbull19/pest_control/blob/main/images/NoBull_Logo_TransparentBG.png?raw=true" alt="Pest Control Logo">
+
+                    <p>Please submit your request and we will get you into our schedule as soon as possible</p>
+
+                    <label>Who is making this request?</label>
+                        <input class="pest_appt_input" id="first_name" type="text" placeholder="Name">
+
+                    <label>What pest is your main concern?</label>
+                        <select class="pest_appt_input" id="pest_appt_input" placeholder="State">
+                            <option value="Ants">Ants</option>
+                            <option value="Cockraoches">Cockroaches</option>
+                            <option value="Earwigs">Earwigs</option>
+                            <option value="Spiders">Spiders</option>
+                            <option value="Wasps">Wasps</option>
+                        </select>
+
+                    <p><input class="new_appt_btn" id="new_appt_submit" type="submit" value="Submit Request"></p>
+                </form>
+
+            </div>
+
+        </div>
+
         <div id="all_appts"></div>
 
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

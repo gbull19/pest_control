@@ -1,7 +1,8 @@
-const allApptsDiv = document.querySelector('#all_appts');
-const userWelcome = document.querySelector('#user_welcome');
-
-// const token = sessionStorage.getItem("accessToken");
+const allApptsDiv = document.getElementById('all_appts');
+const userWelcome = document.getElementById('user_welcome');
+const apptBtn = document.getElementById('appt_btn');
+const newApptDiv = document.querySelector('new_appt');
+const newApptForm = document.getElementById('new_appt_form');
 
 const makeAppointmentCard = (appt) => {
     const { appt_date, interior, appt_price, street_address, city, state} = appt;
@@ -18,60 +19,54 @@ const makeAppointmentCard = (appt) => {
 };
 
 const getAllAppts = () => {
-    // if (!token) {
-    //     allApptsDiv.innerHTML = "";
-    //     allApptsDiv.innerHTML += "Please login before accessing your dashboard."
-    // } else {
-        axios.get('/api/appts')
-            .then((res) => {
-                let dbObj = res.data.dbObj
-                console.log(dbObj)
-                allApptsDiv.innerHTML = "";
-                dbObj.forEach(obj => {
-                    let apptCard = makeAppointmentCard(obj)
-                    allApptsDiv.innerHTML += apptCard
-                })
+    axios.get('/api/appts')
+        .then((res) => {
+            let dbObj = res.data.dbObj
+            console.log(dbObj)
+            allApptsDiv.innerHTML = "";
+            dbObj.forEach(obj => {
+                let apptCard = makeAppointmentCard(obj)
+                allApptsDiv.innerHTML += apptCard
             })
-            .catch((err) => {
-                console.log(err);
-                alert("Error loading content");
-            });
+        })
+        .catch((err) => {
+            console.log(err);
+            alert("Error loading content");
+        });
 }
 
+const newAppt = obj => {
+    axios.post('/api/apptrequest', obj)
+        .then((res) => {
+            alert('Your request has been received!')
+            newApptDiv.classList.remove("active")
+        })
+        .catch((err) => {
+            console.log(err);
+            alert("Error requesting appointment. Please try again.");
+        });
+};
+
+const newApptHandler = event => {
+    event.preventDefault()
+
+    const first_name = document.getElementById('first_name');
+    const pest_name = document.getElementById('pest_appt_input');
+    
+    const reqObj = {
+        first_name: first_name,
+        pest_name: pest_name
+    }
+
+    newAppt(reqObj);
+}
+
+const newApptRequest = () => {
+    newApptDiv.classList.add("active");
+    newApptForm.addEventListener('click', newApptHandler);
+}
+
+apptBtn.addEventListener('click', newApptRequest())
+
+
 getAllAppts();
-
-
-// let dbObj = [
-//     {
-//       "user_address_id": 2,
-//       "street_address": "10880 Malibu Point",
-//       "city": "Malibu",
-//       "state": "Utah",
-//       "user_id": 2,
-//       "appt_id": 1,
-//       "appt_date": "2022-07-26",
-//       "interior": true,
-//       "appt_price": "100"
-//     },
-//     {
-//       "user_address_id": 2,
-//       "street_address": "10880 Malibu Point",
-//       "city": "Malibu",
-//       "state": "Utah",
-//       "user_id": 2,
-//       "appt_id": 2,
-//       "appt_date": "2022-10-01",
-//       "interior": true,
-//       "appt_price": "100"
-//     }
-//   ]
-
-// const getAllAppts = (arr) => {
-//     allApptsDiv.innerHTML = "";
-//     arr.forEach(obj => {
-//         let apptCard = makeAppointmentCard(obj)
-//         allApptsDiv.innerHTML += apptCard
-//     })
-// }
-
-//   getAllAppts(dbObj);

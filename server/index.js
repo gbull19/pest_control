@@ -22,13 +22,14 @@ app.get('/dashJS', getDashJS)
 
 const { privateRoutes } = require('./private.js');
 const { register, login, logout, requireUser } = require("../controllers/auth.js");
-const { getAllAppts, seed } = require('../controllers/controller.js');
+const { getAllAppts, newApptRequest, seed } = require('../controllers/controller.js');
 const { checkAuth } = require('../middlewares/checkAuth.js')
 
 // app.get('/upcoming', getUpcomingAppointments);
 app.get('/private', checkAuth, privateRoutes);
 app.get('/api/appts', getAllAppts);
 app.get('/logout', logout);
+app.post('/api/apptrequest', newApptRequest);
 app.post('/api/login', login);
 app.post('/api/register', register);
 app.post('/api/seed', seed);

@@ -38,20 +38,38 @@ module.exports = {
     getUpcomingAppointments: (req, res) => {
     },
 
-       // const token = req.cookies.accessToken;
-        // const { user_id } = token;
-        // await sequelize.query(
-        //     `SELECT * FROM users u
-        //         JOIN appts a ON u.user_id = a.user_id
-        //         WHERE u.user_id = '${user_id}'`,
-        //     {
-        //         replacements: [user_id],
-        //         type: QueryTypes.INSERT
-        //     }
-        // )
+    newApptRequest: async (req, res) => {
+        const { first_name, pest_name } = req.body;
+        const userAddressID = await sequelize.query(`
+            SELECT user_address_id FROM user_address
+            WHERE user_id = 2;
+        `)
+        const pestID = await sequelize.query(`
+            SELECT pest_id FROM pests
+            WHERE pest_name = ?`,
+            {
+                replacements: [pest_name],
+                type: QueryTypes.INSERT  
+            }
+        )
+        await sequelize.query(`
+            INSERT INTO requests (first_name, user_id, user_address_id, pest_id)
+                VALUES (?, ?, )`,
+            {
+                replacements: [first_name, '2', userAddressID, pestID],
+                type: QueryTypes.INSERT
+            }
+        )
+        .then(dbres => {
+            res.status(200).json({ message: 'Request received' });
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(403).json({ message: "Error recording request"});
+        });
+    },
         
     getAllAppts: (req, res) => {
-        console.log("Get request received")
         sequelize.query(
             `SELECT u.first_name, ua.street_address, ua.city, ua.state, a.appt_date, a.interior, a.appt_price, ap.pest_01 FROM users u
                 JOIN user_address ua ON ua.user_id = u.user_id
@@ -110,13 +128,31 @@ module.exports = {
                 CONSTRAINT fk_user_address_id FOREIGN KEY (user_address_id) REFERENCES user_address(user_address_id)
             );
 
+            CREATE TABLE pests (
+                pest_id SERIAL,
+                pest_name VARCHAR(40) NOT NULL,
+                PRIMARY KEY (pest_id)
+            );
+
             CREATE TABLE appt_pests (
                 appt_pests_id SERIAL,
-                pest_01 VARCHAR(40) NOT NULL,
-                pest_02 VARCHAR(40),
                 appt_id INTEGER NOT NULL,
+                pest_id INTEGER NOT NULL,
                 PRIMARY KEY (appt_pests_id),
-                CONSTRAINT fk_appt_id FOREIGN KEY (appt_id) REFERENCES appts(appt_id)
+                CONSTRAINT fk_appt_id FOREIGN KEY (appt_id) REFERENCES appts(appt_id),
+                CONSTRAINT fk_pest_id FOREIGN KEY (pest_id) REFERENCES pests(pest_id)
+            );
+
+            CREATE TABLE requests (
+                request_id SERIAL,
+                first_name VARCHAR(40) NOT NULL,
+                user_id INTEGER NOT NULL,
+                user_address_id INTEGER NOT NULL,
+                pest_id INTEGER NOT NULL,
+                PRIMARY KEY (request_id),
+                CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
+                CONSTRAINT fk_user_address_id FOREIGN KEY (user_address_id) REFERENCES user_address(user_address_id),
+                CONSTRAINT fk_pest_id FOREIGN KEY (pest_id) REFERENCES pests(pest_id)
             );
 
             INSERT INTO users (first_name, last_name, email, password, is_tech)
@@ -127,13 +163,32 @@ module.exports = {
             VALUES ('123 N 456 W', 'Orem', 'Utah', '1'),
             ('10880 Malibu Point', 'Malibu', 'Utah', '2');
 
-            INSERT INTO appts (appt_date, interior, appt_price, user_id, user_address_id)
-            VALUES ('2022-07-26', '1', '100', '2', '2'),
-            ('2022-10-01', '1', '100', '2', '2');
+            INSERT INTO pests (pest_name)
+            VALUES ('Ants'),
+            ('Cockroaches'),
+            ('Earwigs'),
+            ('Spiders'),
+            ('Wasps');
 
-            INSERT INTO appt_pests (pest_01, appt_id)
-            VALUES ('Spiders', '1'),
-            ('Spiders', '2');
+            INSERT INTO appts (appt_date, interior, appt_price, user_id, user_address_id)
+            VALUES ('2021-07-21', '1', '150', '2', '2'),
+            ('2021-10-20', '1', '150', '2', '2'),
+            ('2022-02-28', '1', '300', '2', '2'),
+            ('2022-05-19', '1', '250', '2', '2'),
+            ('2022-07-26', '1', '150', '2', '2'),
+            ('2022-10-01', '1', '150', '2', '2');
+
+            INSERT INTO appt_pests (appt_id, pest_id)
+            VALUES ('1', '3'),
+            ('2', '1'),
+            ('3', '2'),
+            ('4', '3'),
+            ('5', '5'),
+            ('6', '1');
+
+            INSERT INTO requests (first_name, user_id, user_address_id, pest_id)
+            VALUES ('Pepper', '2', '2', '4');
+
         `).then(() => {
             console.log('DB seeded')
             res.status(200)

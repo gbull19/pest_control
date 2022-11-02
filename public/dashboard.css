@@ -92,8 +92,35 @@ h1 {
 #all_appts {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
     margin-left: 20px;
     gap: 20px;
+}
+
+.new_appt_btn {
+    width: 20%;
+    margin-bottom: 0px;
+    height: 40px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background: #36578c;
+    color: #ebe9e7;
+    font-family: Helvetica Light;
+    font-size: 15px;
+}
+
+.new_appt_btn:hover {
+    width: 20%;
+    margin-bottom: 0px;
+    height: 40px;
+    border: 2px solid #e07400;
+    border-radius: 5px;
+    background: #36578c;
+    color: #ebe9e7;
+    font-family: Helvetica Light;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .appt-card {
@@ -108,12 +135,12 @@ h1 {
     border-radius: 15px 15px 0px 0px;
     position: relative;
     background: #ebe9e7;
+    box-shadow: 0 5px 25px 5px rgb(0 0 0);
 }
 
 /* .outline::before */
 
-
-.form_container {
+.new_appt {
     display: none;
 }
 
@@ -127,8 +154,24 @@ h1 {
     margin-top: 50px;
 }
 
+.form_logo {
+    margin: 0px auto 10px;
+    display: block;
+    max-width: 175px;
+}
 
-.login_button {
+.pest_appt_input {
+    width: 100%;
+    margin-bottom: 5px;
+    height: 25px;
+    padding-left: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-family: Helvetica Light;
+    font-size: 14px;
+}
+
+/* .login_button {
     width: 20%;
     margin-bottom: 0px;
     height: 40px;
@@ -151,17 +194,4 @@ h1 {
     font-family: Helvetica Light;
     font-size: 16px;
     font-weight: bold;
-}
-
-.form_toggle{
-    color: #36578c;
-    font-family: Helvetica Light;
-    font-size: 15px;
-}
-
-.form_toggle:hover {
-    color: #e07400;
-    font-family: Helvetica Light;
-    font-size: 15px;
-    font-weight: bold;
-}
+} */
