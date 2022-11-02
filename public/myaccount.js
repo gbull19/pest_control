@@ -17,8 +17,8 @@ const register = body => axios.post('/api/register', body)
     alert('Uh oh. Your request did not work.')
   });
 
-const registerSubmitHandler= event => {
-  event.preventDefault();
+const registerSubmitHandler= e => {
+  e.preventDefault();
 
   let first_name = document.querySelector('#first_name');
   let last_name = document.querySelector('#last_name');

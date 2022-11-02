@@ -266,7 +266,7 @@ h1 {
     font-size: 14px;
 }
 
-.login_button {
+.submit_button {
     width: 20%;
     margin-bottom: 0px;
     height: 40px;
@@ -278,7 +278,7 @@ h1 {
     font-size: 15px;
 }
 
-.login_button:hover {
+.submit_button:hover {
     width: 20%;
     margin-bottom: 0px;
     height: 40px;
