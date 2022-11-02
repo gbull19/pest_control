@@ -99,9 +99,10 @@ module.exports = {
         
     getAllAppts: (req, res) => {
         let token = req.headers.cookie;
+        token = token.split("=")[1].replace(/['"]+/g, '');
         // add token verification to load the dashboard page, else log message "Please login before viewing dashbaord"
+        
         token = jwt.verify(token, ACCESS_TOKEN_SECRET)
-        // token = token.split("=")[1].replace(/['"]+/g, '');
         // let base64Url = token.split('.')[1];
         // let base64 = base64Url.replace('-', '+').replace('_', '/');
         // token = JSON.parse(window.atob(base64));
