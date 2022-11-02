@@ -61,12 +61,16 @@ const newApptHandler = event => {
     newAppt(reqObj);
 }
 
-const newApptRequest = () => {
-    newApptDiv.classList.add("active");
-    newApptForm.addEventListener('click', newApptHandler);
-}
+const newApptToggle = (event) => {
+    if (newApptDiv.classList.contains("active")) {
+        newApptDiv.classList.remove("active");
+    } else {
+        newApptDiv.classList.add("active");
+    }
+};
 
-apptBtn.addEventListener('click', newApptRequest())
+apptBtn.addEventListener('click', newApptToggle);
+newApptForm.addEventListener('click', newApptHandler);
 
 
 getAllAppts();

@@ -54,7 +54,7 @@ module.exports = {
         )
         await sequelize.query(`
             INSERT INTO requests (first_name, user_id, user_address_id, pest_id)
-                VALUES (?, ?, )`,
+                VALUES (?, ?, ?, ?)`,
             {
                 replacements: [first_name, '2', userAddressID, pestID],
                 type: QueryTypes.INSERT
@@ -65,7 +65,7 @@ module.exports = {
         })
         .catch((error) => {
             console.log(error);
-            res.status(403).json({ message: "Error recording request"});
+            res.status(403).json({ message: 'Error recording request' });
         });
     },
         
