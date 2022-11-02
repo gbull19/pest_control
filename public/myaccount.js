@@ -103,6 +103,7 @@ const loginToggleHandler = e => {
 const dashLoad = () => axios.get('/private')
   .then(res => {
       console.log("Private route verified");
+      console.log( "res.headers = ", req.headers);
       location.assign("/dashboard.html");
    })
   .catch(err => {console.log(err)

@@ -82,9 +82,8 @@ module.exports = {
                 email: email,
                 user_id: user_id,
                 first_name: first_name
-            } //good to here
+            }
             const token = jwt.sign(user, ACCESS_TOKEN_SECRET);
-            // , {expireIn: '1d'});
             res.cookie('accessToken', `'${token}'`, { maxAge: 60*60*8 });
             res.status(200).json({ message: "Successful login.", token: `${token}`});
         })
