@@ -2,6 +2,7 @@ require('dotenv').config();
 const bcrypt = require("bcryptjs");
 const salt = bcrypt.genSaltSync(10);
 const jwt = require('jsonwebtoken');
+const atob = require('atob');
 const { cookie, clearCookie } = require("cookie-parser");
 const {ACCESS_TOKEN_SECRET} = process.env;
 const {Sequelize, OP, QueryTypes} = require("sequelize");
@@ -97,7 +98,21 @@ module.exports = {
     },
         
     getAllAppts: (req, res) => {
-        console.log("getAllAppts header = ", req.headers.cookie)
+        let token = req.headers.cookie;
+        token = token.split("=")[1].replace(/['"]+/g, '');
+        // add token verification to load the dashboard page, else log message "Please login before viewing dashbaord"
+
+        let base64Url = token.split('.')[1];
+        let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        let jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        token = JSON.parse(jsonPayload);
+        console.log("Parsed token = ", token)
+
+        const { user_id } = token;
+        console.log("user_id = ", user_id);
+
         sequelize.query(
             `SELECT u.first_name, ua.street_address, ua.city, ua.state, a.appt_date, a.interior, a.appt_price, p.pest_name
             FROM users u
