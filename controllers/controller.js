@@ -107,7 +107,7 @@ module.exports = {
         }
         const { user_id } = authenticated;
         sequelize.query(
-            `SELECT u.first_name, ua.street_address, ua.city, ua.state, a.appt_date, a.interior, a.appt_price, p.pest_name
+            `SELECT u.first_name, u.user_id, ua.street_address, ua.city, ua.state, a.appt_date, a.interior, a.appt_price, p.pest_name
             FROM users u
                 JOIN user_address ua ON ua.user_id = u.user_id
                 JOIN appts a ON a.user_id = u.user_id

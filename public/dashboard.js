@@ -1,8 +1,11 @@
+const logout = require('../controllers/auth.js');
+
 const allApptsDiv = document.getElementById('all_appts');
 const userWelcome = document.getElementById('user_welcome');
 const apptBtn = document.getElementById('appt_btn');
 const newApptDiv = document.getElementById('new_appt_div');
 const newApptForm = document.getElementById('new_appt_form');
+const logoutBtn = document.getElementById('logout');
 
 const makeAppointmentCard = (appt) => {
     const { appt_date, interior, appt_price, street_address, city, state, pest_name} = appt;
@@ -22,7 +25,7 @@ const makeAppointmentCard = (appt) => {
 const getAllAppts = () => {
     axios.get('/api/appts')
         .then((res) => {
-            console.log("res.headers = ", res.headers);
+            console.log("res.data = ", res.data);
             let dbObj = res.data.dbObj
             allApptsDiv.innerHTML = "";
             dbObj.forEach(obj => {
@@ -74,6 +77,7 @@ const newApptToggle = (e) => {
 
 apptBtn.addEventListener('click', newApptToggle);
 newApptForm.addEventListener('submit', newApptHandler);
+logoutBtn.addEventListener('click', logout);
 
 
 getAllAppts();
