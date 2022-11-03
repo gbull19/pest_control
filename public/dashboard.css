@@ -24,8 +24,10 @@ h1 {
 .header_logo {
     justify-self: flex-start;
     align-items: center;
-    scale: 60%;
-    margin: 0px;
+    height: auto;
+    width: 400px;
+    max-width: 200px;
+    margin-left: 20px;
     padding: 0px;
 }
 

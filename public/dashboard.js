@@ -26,9 +26,9 @@ const getAllAppts = () => {
         .then((res) => {
             let dbObj = res.data.dbObj
             if (dbObj.length == 0) {
-                newApptDiv.innerHTML = "";
                 newUserDiv.innerHTML = "";
                 newUserDiv.innerHTML = "You don't have any appointment history yet. Please click Request Treatment above to schedule your first treatment!"
+                return
             }
             allApptsDiv.innerHTML = "";
             dbObj.forEach(obj => {
