@@ -17,18 +17,3 @@ module.exports = {
         next();
     }
 }
-
-// (req, res, next) => {
-//     const token = sessionStorage.getItem("accessToken");
-//     console.log(token)
-//     if(!token) {
-//         return res.status(401).json('No token present.');
-//     }
-//     jwt.verify(token, ACCESS_TOKEN_SECRET, (err, user) => {
-//         if(err){
-//             return res.status(403).send(alert('Token not verified.'));
-//         } else {
-//             location.assign("/dashboard.html");
-//         } 
-//     }); 
-// }

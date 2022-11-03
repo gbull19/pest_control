@@ -40,9 +40,6 @@ module.exports = {
         res.sendFile(path.join(__dirname, '../public/contactus.js'))
     },
 
-    // getUpcomingAppointments: (req, res) => {
-    // },
-
     newContactForm: (req, res) => {
         const { first_name, last_name, phone, email, message } = req.body;
         console.log("req.body = ", req.body);

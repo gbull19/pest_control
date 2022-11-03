@@ -96,13 +96,5 @@ module.exports = {
     logout: (req, res) => {
         res.clearCookie('accessToken');
         return res.status(200).json( 'Logout successful.');
-    },
-
-    requireUser: (req, res, next) => {
-        if (!req.user) {
-            return res.status(401).json({message: "You must be logged in"});
-            // next();
-        }
-        next();
     }
 }

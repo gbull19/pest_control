@@ -21,9 +21,11 @@ const makeAppointmentCard = (appt) => {
 };
 
 const getAllAppts = () => {
+    console.log("document.cookies = ", document.cookies)
     axios.get('/api/appts')
         .then((res) => {
             let dbObj = res.data.dbObj
+            console.log("dbObj = ", dbObj)
             allApptsDiv.innerHTML = "";
             dbObj.forEach(obj => {
                 let apptCard = makeAppointmentCard(obj)
