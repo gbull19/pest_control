@@ -4,7 +4,7 @@ const apptBtn = document.getElementById('appt_btn');
 const newApptDiv = document.getElementById('new_appt_div');
 const newApptForm = document.getElementById('new_appt_form');
 const logoutBtn = document.getElementById('logout');
-const newUserDiv = document.querySelector('new_user_div');
+const newUserDiv = document.getElementById('new_user_div');
 
 const makeAppointmentCard = (appt) => {
     const { appt_date, interior, appt_price, street_address, city, state, pest_name} = appt;
@@ -26,7 +26,8 @@ const getAllAppts = () => {
         .then((res) => {
             let dbObj = res.data.dbObj
             if (dbObj.length == 0) {
-                newUserDiv.innerHTML += "You don't have any appointment history yet. Please click Request Treatment above to schedule your first treatment!"
+                newUserDiv.innerHTML = "";
+                newUserDiv.innerHTML += "You don't have any appointment history yet. Please click Request Treatment above to schedule your first treatment!";
                 return
             }
             allApptsDiv.innerHTML = "";
