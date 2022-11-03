@@ -171,3 +171,13 @@ h1 {
     background: #ebe9e7;
     box-shadow: 0 5px 20px 5px rgb(0 0 0);
 }
+
+.new_user_div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 50px;
+    font-family: Helvetica;
+    font-size: 18px;
+}
