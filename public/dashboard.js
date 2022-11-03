@@ -21,11 +21,16 @@ const makeAppointmentCard = (appt) => {
 };
 
 const getAllAppts = () => {
-    console.log("document.cookies = ", document.cookies)
     axios.get('/api/appts')
         .then((res) => {
             let dbObj = res.data.dbObj
-            console.log("dbObj = ", dbObj)
+
+            if (dbObj.length == 0) {
+                allApptsDiv.innerHTML = "";
+                allApptsDiv.innerHTML = "You don't have any appointment history yet. Please click Request Treatment above to schedule your first treatment!"
+                return
+            }
+            
             allApptsDiv.innerHTML = "";
             dbObj.forEach(obj => {
                 let apptCard = makeAppointmentCard(obj)

@@ -97,7 +97,6 @@ module.exports = {
     getAllAppts: (req, res) => {
         let token = req.headers.cookie;
         token = token.split("=")[1].replace(/['"]+/g, '');
-        // add token verification to load the dashboard page, else log message "Please login before viewing dashbaord"
         let authenticated = jwt.verify(token, ACCESS_TOKEN_SECRET);
         if (!authenticated) {
             return res.status(401).json({ message: "Please login before accessing the dashboard"});

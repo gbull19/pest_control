@@ -295,7 +295,7 @@ h1 {
     cursor: pointer;
 }
 
-.signup_button {
+.form_button {
     width: 20%;
     margin-bottom: 0px;
     height: 40px;
@@ -307,7 +307,7 @@ h1 {
     font-size: 15px;
 }
 
-.signup_button:hover {
+.form_button:hover {
     width: 20%;
     margin-bottom: 0px;
     height: 40px;
@@ -323,7 +323,7 @@ h1 {
 .contact_form_div {
     background-color: white;
     width: 100%;
-    min-height: 700px;
+    min-height: 650px;
     display: flex;
     flex-direction: row;
     justify-content: center;
