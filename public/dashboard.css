@@ -118,6 +118,10 @@ h1 {
     font-weight: bold;
 }
 
+.hidden {
+    display: none;
+}
+
 .new_appt {
     display: none;
 }

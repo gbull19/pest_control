@@ -40,6 +40,7 @@ module.exports = {
         res.sendFile(path.join(__dirname, '../public/contactus.js'))
     },
 
+
     newContactForm: (req, res) => {
         const { first_name, last_name, phone, email, message } = req.body;
         console.log("req.body = ", req.body);
@@ -60,6 +61,7 @@ module.exports = {
             res.status(401).json({ message: 'Error recording message' });
         })
     },
+
 
     newApptRequest: async (req, res) => {
         const { first_name, pest_name } = req.body;
@@ -93,7 +95,8 @@ module.exports = {
             res.status(403).json({ message: 'Error recording request' });
         });
     },
-        
+    
+    
     getAllAppts: (req, res) => {
         let token = req.headers.cookie;
         token = token.split("=")[1].replace(/['"]+/g, '');
@@ -103,7 +106,7 @@ module.exports = {
         }
         const { user_id } = authenticated;
         sequelize.query(
-            `SELECT u.first_name, u.user_id, ua.street_address, ua.city, ua.state, a.appt_date, a.interior, a.appt_price, p.pest_name
+            `SELECT u.first_name, u.user_id, ua.street_address, ua.city, ua.state, a.appt_date, a.interior, a.appt_price, p.pest_name, u.is_tech
             FROM users u
                 JOIN user_address ua ON ua.user_id = u.user_id
                 JOIN appts a ON a.user_id = u.user_id
@@ -113,7 +116,6 @@ module.exports = {
         )
         .then(dbres => {
             let [dbObj] = dbres;
-            console.log(dbObj)
             res.status(200).json({ dbObj });
         })
         .catch((error) => {
@@ -121,6 +123,7 @@ module.exports = {
             res.status(403).json({ message: "Error retrieving information"});
         });
     },
+
 
     seed: (req, res) => {
         sequelize.query(`
