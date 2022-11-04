@@ -27,6 +27,7 @@ const getAllAppts = () => {
     axios.get('/api/appts')
         .then((res) => {
             let dbObj = res.data.dbObj;
+            console.log(dbObj);
             if (dbObj.length == 0 && dbObj[0].is_tech == false) {
                 newUserDiv.innerHTML = "";
                 newUserDiv.innerHTML += "You don't have any appointment history yet. Please click Request Treatment above to schedule your first treatment!";
@@ -44,7 +45,7 @@ const getAllAppts = () => {
         .catch((err) => {
             logoutBtn.classList.add("hidden");
             apptBtn.classList.add("hidden");
-            return alert("Error loading content");
+            return alert(`${err.response.data.message}`);
         });
 }
 
