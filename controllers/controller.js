@@ -99,10 +99,13 @@ module.exports = {
     
     getAllAppts: (req, res) => {
         let token = req.headers.cookie;
+        if (token === undefined) {
+            return res.status(401).json({ message: "Please login before accessing the dashboard."});
+        };
         token = token.split("=")[1].replace(/['"]+/g, '');
         let authenticated = jwt.verify(token, ACCESS_TOKEN_SECRET);
         if (!authenticated) {
-            return res.status(401).json({ message: "Please login before accessing the dashboard"});
+            return res.status(401).json({ message: "Please login before accessing the dashboard."});
         }
         const { user_id } = authenticated;
         sequelize.query(

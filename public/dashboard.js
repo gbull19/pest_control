@@ -27,7 +27,6 @@ const getAllAppts = () => {
     axios.get('/api/appts')
         .then((res) => {
             let dbObj = res.data.dbObj;
-            console.log("is tech = ", dbObj[0].is_tech);
             console.log(dbObj);
 
             if (dbObj.length == 0) {
@@ -48,9 +47,11 @@ const getAllAppts = () => {
             };        
         })
         .catch((err) => {
-            console.log(err);
-            alert(`${err.response.data.message}`);
-            // alert("Error loading content");
+            console.log("err = ", err);
+            if (err.response.data.message != undefined) {
+                alert(`${err.response.data.message}`);
+            }
+            alert("Error loading content");
         });
 }
 
