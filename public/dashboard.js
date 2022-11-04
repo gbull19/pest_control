@@ -42,7 +42,7 @@ const getAllAppts = () => {
             };     
         })
         .catch((err) => {
-            if (err.response.data.message != undefined) {
+            if (err.response.data.message !== undefined) {
                 logoutBtn.classList.add("hidden");
                 apptBtn.classList.add("hidden");
                 return alert(`${err.response.data.message}`);
