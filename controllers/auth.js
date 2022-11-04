@@ -63,7 +63,7 @@ module.exports = {
         hashPassword = hashPassword[0][0].password;
         console.log("password = ", password)
         console.log("hashPassword = ", hashPassword)
-        const authenticated = bcrypt.compare(password, hashPassword);
+        const authenticated = bcrypt.compareSync(password, hashPassword);
             if(!authenticated) { 
                 res.status(401).json({message: "Email and Password do not match. Please try again."})
                 return
