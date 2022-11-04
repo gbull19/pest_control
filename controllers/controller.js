@@ -110,7 +110,7 @@ module.exports = {
         const { user_id, is_tech } = authenticated;
         if (is_tech == true) {
             let obj = sequelize.query(`
-                SELECT * FROM requests
+                SELECT * FROM users
             `)
         } else {
             let obj = sequelize.query(
