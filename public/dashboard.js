@@ -27,13 +27,13 @@ const getAllAppts = () => {
     axios.get('/api/appts')
         .then((res) => {
             let dbObj = res.data.dbObj;
-
+            console.log("dbObj = ", dbObj);
             if (dbObj.length == 0) {
                 newUserDiv.innerHTML = "";
                 newUserDiv.innerHTML += "You don't have any appointment history yet. Please click Request Treatment above to schedule your first treatment!";
-                logoutBtn.classList.add("hidden");
-                apptBtn.classList.add("hidden");
-                return;
+                // logoutBtn.classList.add("hidden");
+                // apptBtn.classList.add("hidden");
+                // return;
             };
             allApptsDiv.innerHTML = "";
             dbObj.forEach(obj => {
@@ -42,9 +42,8 @@ const getAllAppts = () => {
             })
         })
         .catch((err) => {
-            console.log(res.data);
             console.log(err);
-            alert(`${res.data.message}`);
+            alert(`${err.response.data.message}`);
             // alert("Error loading content");
         });
 }

@@ -119,8 +119,7 @@ module.exports = {
             res.status(200).json({ dbObj });
         })
         .catch((error) => {
-            console.log(error);
-            res.status(403).json({ message: "Error retrieving information"});
+            res.status(403).json({ message: "Error retrieving information. Please login and try again."});
         });
     },
 
