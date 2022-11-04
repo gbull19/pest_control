@@ -42,9 +42,9 @@ module.exports = {
         )
         .then(() => {
             console.log('Registration complete')
-            res.status(200).json({message: "Registration successful"})
+            res.status(200).json({message: "Account registered successfully!"})
         }).catch(err => 
-            console.log('Error seeding DB', err),
+            console.log('Error with registration. Please try again.', err),
             res.status(400)
         );
     },
@@ -90,7 +90,7 @@ module.exports = {
         })
         .catch((error) => {
             console.log(error);
-            res.status(403).json({ message: "Error retrieving information" });
+            res.status(403).json({ message: "Error retrieving information. Please try again." });
         });
     },
 

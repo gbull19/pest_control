@@ -92,7 +92,7 @@ module.exports = {
         })
         .catch((error) => {
             console.log(error);
-            res.status(403).json({ message: 'Error recording request' });
+            res.status(403).json({ message: 'Error recording request. Please try again.' });
         });
     },
     

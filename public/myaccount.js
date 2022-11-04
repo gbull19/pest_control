@@ -20,7 +20,7 @@ const register = body => axios.post('/api/register', body)
     regToggle();
   })
   .catch(err => {console.log(err)
-    alert('Uh oh. Your request did not work.');
+    alert(`${err.response.data.message}`);
   });
 
 
@@ -106,7 +106,7 @@ const dashLoad = () => axios.get('/private')
       location.assign("/dashboard.html");
    })
   .catch(err => {console.log(err)
-      alert("Couldn't load dashboard. Please try again.");
+    alert(`${err.response.data.message}`);
   }) 
 
 
@@ -117,7 +117,7 @@ const login = (body) => axios.post('/api/login', body)
   })
   .catch(err => {
       console.log(err);
-      alert(`${err.response.data.message}`)
+      alert(`${err.response.data.message}`);
       // alert('Invalid credentials. Please try again.');
   })
 

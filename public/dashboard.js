@@ -42,11 +42,6 @@ const getAllAppts = () => {
             };     
         })
         .catch((err) => {
-            if (err.response.data.message !== undefined || err.response.data.message !== null) {
-                logoutBtn.classList.add("hidden");
-                apptBtn.classList.add("hidden");
-                return alert(`${err.response.data.message}`);
-            }
             logoutBtn.classList.add("hidden");
             apptBtn.classList.add("hidden");
             return alert("Error loading content");
@@ -61,9 +56,9 @@ const newAppt = obj => {
             newApptForm.reset();
             newApptDiv.classList.remove("active");
         })
-        .catch((err) => {
-            console.log(err);
-            alert("Error requesting appointment. Please try again.");
+        .catch((err) => {     
+            console.log(err);       
+            alert(`${err.response.data.message}`);
         });
 };
 
