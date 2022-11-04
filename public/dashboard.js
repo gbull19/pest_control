@@ -27,7 +27,7 @@ const getAllAppts = () => {
     axios.get('/api/appts')
         .then((res) => {
             let dbObj = res.data.dbObj;
-            if (dbObj.length == 0) {
+            if (dbObj.length == 0 && dbObj[0].is_tech == false) {
                 newUserDiv.innerHTML = "";
                 newUserDiv.innerHTML += "You don't have any appointment history yet. Please click Request Treatment above to schedule your first treatment!";
                 return;
@@ -37,7 +37,7 @@ const getAllAppts = () => {
                 let apptCard = makeAppointmentCard(obj);
                 allApptsDiv.innerHTML += apptCard;
                 })
-            } else if (dbObj.length !== 0 && dbObj[0].is_tech == true) {
+            } else if (dbObj[0].is_tech == true) {
                 newUserDiv.innerHTML += "You're a tech!";
             };     
         })
