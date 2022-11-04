@@ -115,8 +115,9 @@ const login = (body) => axios.post('/api/login', body)
       alert("Login successful!");
       dashLoad();
   })
-  .catch(err => {console.log(err)
-      alert(`${err.data.message}`)
+  .catch(err => {
+      console.log(err);
+      alert(`${res.data.message}`)
       // alert('Invalid credentials. Please try again.');
   })
 
