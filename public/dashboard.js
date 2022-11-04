@@ -27,19 +27,25 @@ const getAllAppts = () => {
     axios.get('/api/appts')
         .then((res) => {
             let dbObj = res.data.dbObj;
-            console.log("dbObj = ", dbObj);
+            console.log("is tech = ", dbObj[0].is_tech);
+            console.log(dbObj);
+
             if (dbObj.length == 0) {
                 newUserDiv.innerHTML = "";
                 newUserDiv.innerHTML += "You don't have any appointment history yet. Please click Request Treatment above to schedule your first treatment!";
-                // logoutBtn.classList.add("hidden");
-                // apptBtn.classList.add("hidden");
-                // return;
-            };
-            allApptsDiv.innerHTML = "";
-            dbObj.forEach(obj => {
+                return;
+                
+            } else if (dbObj.length !== 0 && dbObj[0].is_tech == false) {
+                allApptsDiv.innerHTML = "";
+                dbObj.forEach(obj => {
                 let apptCard = makeAppointmentCard(obj);
                 allApptsDiv.innerHTML += apptCard;
-            })
+                })
+            } else if (dbObj.length !== 0 && dbObj[0].is_tech == true) {
+                newUserDiv.innerHTML += "You're a tech!";
+                // logoutBtn.classList.add("hidden");
+                // apptBtn.classList.add("hidden");
+            };        
         })
         .catch((err) => {
             console.log(err);
