@@ -103,9 +103,7 @@ const loginToggleHandler = e => {
 
 const dashLoad = () => axios.get('/private')
   .then(res => {
-      console.log( "res.headers = ", res.headers);
-      console.log("res = ", res)
-      // location.assign("/dashboard.html");
+      location.assign("/dashboard.html");
    })
   .catch(err => {console.log(err)
       alert("Couldn't load dashboard. Please try again.");
@@ -118,7 +116,8 @@ const login = (body) => axios.post('/api/login', body)
       dashLoad();
   })
   .catch(err => {console.log(err)
-      alert('Invalid credentials. Please try again.');
+      alert(`${err.data.message}`)
+      // alert('Invalid credentials. Please try again.');
   })
 
 
