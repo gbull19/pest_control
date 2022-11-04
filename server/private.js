@@ -1,4 +1,5 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const app = express();
 
@@ -12,7 +13,7 @@ module.exports = {
         console.log(is_tech);
 
         res.cookie('accessToken', `'${accessToken}'`, { maxAge: 60*60*8 });
-        
+
         res.status(200).json({ message: "You got the private route", admin: is_tech });
     }
 }

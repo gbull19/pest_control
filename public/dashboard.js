@@ -24,6 +24,7 @@ const makeAppointmentCard = (appt) => {
 
 
 const getAllAppts = () => {
+    console.log("req.headers = ", req.headers)
     axios.get('/api/appts')
         .then((res) => {
             let dbObj = res.data.dbObj
