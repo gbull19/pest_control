@@ -27,13 +27,10 @@ const getAllAppts = () => {
     axios.get('/api/appts')
         .then((res) => {
             let dbObj = res.data.dbObj;
-            console.log(dbObj);
-
             if (dbObj.length == 0) {
                 newUserDiv.innerHTML = "";
                 newUserDiv.innerHTML += "You don't have any appointment history yet. Please click Request Treatment above to schedule your first treatment!";
                 return;
-                
             } else if (dbObj.length !== 0 && dbObj[0].is_tech == false) {
                 allApptsDiv.innerHTML = "";
                 dbObj.forEach(obj => {
@@ -42,16 +39,17 @@ const getAllAppts = () => {
                 })
             } else if (dbObj.length !== 0 && dbObj[0].is_tech == true) {
                 newUserDiv.innerHTML += "You're a tech!";
-                // logoutBtn.classList.add("hidden");
-                // apptBtn.classList.add("hidden");
-            };        
+            };     
         })
         .catch((err) => {
-            console.log("err = ", err);
             if (err.response.data.message != undefined) {
-                alert(`${err.response.data.message}`);
+                logoutBtn.classList.add("hidden");
+                apptBtn.classList.add("hidden");
+                return alert(`${err.response.data.message}`);
             }
-            alert("Error loading content");
+            logoutBtn.classList.add("hidden");
+            apptBtn.classList.add("hidden");
+            return alert("Error loading content");
         });
 }
 
