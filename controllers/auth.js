@@ -61,15 +61,13 @@ module.exports = {
             }
             );
         hashPassword = hashPassword[0][0].password;
-        console.log("password = ", password)
-        console.log("hashPassword = ", hashPassword)
         const authenticated = bcrypt.compareSync(password, hashPassword);
             if(!authenticated) { 
                 res.status(401).json({message: "Email and Password do not match. Please try again."})
                 return
             }
             sequelize.query(
-                `SELECT email, user_id, first_name FROM users
+                `SELECT email, user_id, first_name, is_tech FROM users
                 WHERE email = ?
                 AND password = '${hashPassword}'`,
                 {
@@ -79,11 +77,12 @@ module.exports = {
             )
         .then(dbres => {
             let [[dbObj]] = dbres;
-            const {email, user_id, first_name} = dbObj;
+            const {email, user_id, first_name, is_tech} = dbObj;
             let user = {
                 email: email,
                 user_id: user_id,
-                first_name: first_name
+                first_name: first_name,
+                is_tech: is_tech
             }
             const token = jwt.sign(user, ACCESS_TOKEN_SECRET);
             res.cookie('accessToken', `'${token}'`, { maxAge: 60*60*8 });

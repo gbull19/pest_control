@@ -7,11 +7,11 @@ const loginToggle = document.getElementById("login_toggle");
 const loginDiv = document.getElementById("loginDiv");
 
 
-//register functions
 const regToggle = () => {
   registerDiv.classList.remove("active");
   loginDiv.classList.add("active");
 };
+
 
 const register = body => axios.post('/api/register', body)
   .then(res => {
@@ -20,8 +20,9 @@ const register = body => axios.post('/api/register', body)
     regToggle();
   })
   .catch(err => {console.log(err)
-    alert('Uh oh. Your request did not work.')
+    alert('Uh oh. Your request did not work.');
   });
+
 
 const registerSubmitHandler= e => {
   e.preventDefault();
@@ -64,9 +65,9 @@ const registerSubmitHandler= e => {
     alert(`${errors[0].message}`);
     return errors;
   } else if (errors.length == 0) {
-    console.log("Password accepted.")
+    console.log("Password accepted.");
   } else {
-    alert("Please choose another password.")
+    alert("Please choose another password.");
   };
 
   let bodyObj = {
@@ -79,17 +80,18 @@ const registerSubmitHandler= e => {
     is_tech: 0,
     password: password.value
   };
+
   register(bodyObj);
 }
 
 
-//form toggle handlers
 const registerToggleHandler = e => {
   e.preventDefault();
 
   registerDiv.classList.remove("active");
   loginDiv.classList.add("active");
 };
+
 
 const loginToggleHandler = e => {
   e.preventDefault();
@@ -99,27 +101,26 @@ const loginToggleHandler = e => {
 };
 
 
-//dashboard load
 const dashLoad = () => axios.get('/private')
   .then(res => {
-      console.log("Private route verified");
       console.log( "res.headers = ", res.headers);
-      location.assign("/dashboard.html");
+      console.log("res = ", res)
+      // location.assign("/dashboard.html");
    })
   .catch(err => {console.log(err)
       alert("Couldn't load dashboard. Please try again.");
   }) 
 
 
-//login
 const login = (body) => axios.post('/api/login', body)
   .then(res => {
       alert("Login successful!");
       dashLoad();
   })
   .catch(err => {console.log(err)
-      alert('Invalid credentials. Please try again.')
+      alert('Invalid credentials. Please try again.');
   })
+
 
 const loginSubmitHandler = event => {
   event.preventDefault();
@@ -130,16 +131,15 @@ const loginSubmitHandler = event => {
   let bodyObj = {
     email: email.value,
     password: password.value
-  }
+  };
 
-  login(bodyObj)
+  login(bodyObj);
 };
 
 
-//event listeners
 registerForm.addEventListener('submit', registerSubmitHandler);
 registerToggle.addEventListener('click', registerToggleHandler);
 
 loginForm.addEventListener('submit', loginSubmitHandler);
-loginToggle.addEventListener('click', loginToggleHandler)
+loginToggle.addEventListener('click', loginToggleHandler);
 

@@ -6,10 +6,11 @@ const newApptForm = document.getElementById('new_appt_form');
 const logoutBtn = document.getElementById('logout');
 const newUserDiv = document.getElementById('new_user_div');
 
+
 const makeAppointmentCard = (appt) => {
     const { appt_date, interior, appt_price, street_address, city, state, pest_name} = appt;
-    let interiorService = ""
-    if (interior == true) { interiorService = "Yes" } else { interiorService = "No" }
+    let interiorService = "";
+    if (interior == true) { interiorService = "Yes" } else { interiorService = "No" };
     return (`<div class="appt-card-border">
             <div class="appt-card">
                 <h2>${appt_date}</h2>
@@ -18,8 +19,9 @@ const makeAppointmentCard = (appt) => {
                 <p>Was Interior Treated?: ${interiorService}</p>
                 <p>What was the target pest? ${pest_name}</p>
             </div>
-        </div>`)
+        </div>`);
 };
+
 
 const getAllAppts = () => {
     axios.get('/api/appts')
@@ -28,12 +30,12 @@ const getAllAppts = () => {
             if (dbObj.length == 0) {
                 newUserDiv.innerHTML = "";
                 newUserDiv.innerHTML += "You don't have any appointment history yet. Please click Request Treatment above to schedule your first treatment!";
-                return
+                return;
             }
             allApptsDiv.innerHTML = "";
             dbObj.forEach(obj => {
-                let apptCard = makeAppointmentCard(obj)
-                allApptsDiv.innerHTML += apptCard
+                let apptCard = makeAppointmentCard(obj);
+                allApptsDiv.innerHTML += apptCard;
             })
         })
         .catch((err) => {
@@ -42,11 +44,13 @@ const getAllAppts = () => {
         });
 }
 
+
 const newAppt = obj => {
     axios.post('/api/apptrequest', obj)
         .then((res) => {
-            alert('Your request has been received!')
-            newApptDiv.classList.remove("active")
+            alert('Your request has been received!');
+            newApptForm.reset();
+            newApptDiv.classList.remove("active");
         })
         .catch((err) => {
             console.log(err);
@@ -54,8 +58,9 @@ const newAppt = obj => {
         });
 };
 
+
 const newApptHandler = e => {
-    e.preventDefault()
+    e.preventDefault();
 
     const first_name = document.getElementById('first_name');
     const pest_name = document.getElementById('pest_appt_input');
@@ -63,10 +68,11 @@ const newApptHandler = e => {
     const reqObj = {
         first_name: first_name.value,
         pest_name: pest_name.value
-    }
+    };
 
     newAppt(reqObj);
 }
+
 
 const newApptToggle = (e) => {
     e.preventDefault()
@@ -78,17 +84,19 @@ const newApptToggle = (e) => {
     }
 };
 
+
 const logout = () => {
     axios.get('/api/logout')
         .then((res) => {
-           alert("Logout successful.")
+           alert("Logout successful.");
            location.assign("/myaccount.html");
         })        
         .catch((err) => {
             console.log(err);
-            alert("Error loggin out. Please try again.");
+            alert("Error logging out. Please try again.");
         });
 }
+
 
 apptBtn.addEventListener('click', newApptToggle);
 newApptForm.addEventListener('submit', newApptHandler);
