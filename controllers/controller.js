@@ -108,12 +108,7 @@ module.exports = {
             return res.status(401).json({ message: "Please login before accessing the dashboard."});
         }
         const { user_id, is_tech } = authenticated;
-        if (is_tech == true) {
-            let obj = sequelize.query(`
-                SELECT * FROM users
-            `)
-        } else {
-            let obj = sequelize.query(
+       sequelize.query(
                 `SELECT u.first_name, u.user_id, ua.street_address, ua.city, ua.state, a.appt_date, a.interior, a.appt_price, p.pest_name, u.is_tech
                 FROM users u
                     JOIN user_address ua ON ua.user_id = u.user_id
@@ -121,9 +116,7 @@ module.exports = {
                     JOIN appt_pests ap ON ap.appt_id = a.appt_id
                     JOIN pests p ON p.pest_id = ap.pest_id
                 WHERE u.user_id = '${user_id}';`
-            )
-        }
-        return obj
+        )
         .then(dbRes => {
             let [dbObj] = dbRes;
             res.status(200).json({ dbObj });
